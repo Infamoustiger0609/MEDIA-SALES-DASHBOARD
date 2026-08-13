@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --color-grade-a: #16a34a;
+  --color-grade-a-bg: #dcfce7;
+  --color-grade-b: #b45309;
+  --color-grade-b-bg: #fef3c7;
+  --color-grade-c: #dc2626;
+  --color-grade-c-bg: #fee2e2;
+  --color-grade-n-bg: #f1f5f9;
+  --color-grade-n: #64748b;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+  }
+}
