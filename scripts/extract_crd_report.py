@@ -63,7 +63,7 @@ def clean(value):
         return None
     if isinstance(value, str):
         stripped = value.strip()
-        if stripped in DATA_ISSUE_VALUES or stripped == "-" or stripped == "":
+        if stripped in DATA_ISSUE_VALUES or stripped in ("-", "--") or stripped == "":
             return None
         return stripped
     return value
