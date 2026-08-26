@@ -10,7 +10,9 @@ const GRADE_STYLES: Record<string, string> = {
   C: "bg-rose-100 text-rose-700 ring-rose-600/20",
 };
 
-const FALLBACK_STYLE = "bg-slate-100 text-slate-500 ring-slate-500/20";
+// Neutral fallback for a missing grade -- distinct from the colorblind-safe
+// A+/A/B/C system above, which must never change.
+const FALLBACK_STYLE = "bg-charcoal/5 text-charcoal/50 ring-charcoal/10";
 
 export default function GradeBadge({ grade, label }: GradeBadgeProps) {
   const style = grade ? (GRADE_STYLES[grade] ?? FALLBACK_STYLE) : FALLBACK_STYLE;

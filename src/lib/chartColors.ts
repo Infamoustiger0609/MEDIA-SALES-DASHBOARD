@@ -23,3 +23,15 @@ export const STATUS = {
   serious: "#ec835a",
   critical: "#d03b3b",
 };
+
+/**
+ * PVR INOX brand accents -- chrome only (e.g. a tooltip's accent border).
+ * Never assign these to a data series: CATEGORICAL above is the
+ * colorblind-safe, order-dependent palette for that, and must stay as-is.
+ */
+export const BRAND_ACCENT = {
+  gold: "#a9791f",
+  terracotta: "#b2543a",
+  charcoal: "#2a2622",
+  cream: "#fbf7ef",
+};

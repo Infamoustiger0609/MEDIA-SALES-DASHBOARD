@@ -11,6 +11,16 @@
   --color-grade-c-bg: #fee2e2;
   --color-grade-n-bg: #f1f5f9;
   --color-grade-n: #64748b;
+
+  /* PVR INOX brand accents -- chrome/identity only (nav, headers, card
+     surfaces). Never used for grade/status semantics or chart data series --
+     those stay on the colorblind-safe systems above and in chartColors.ts. */
+  --color-charcoal: #2a2622;
+  --color-gold: #a9791f;
+  --color-gold-soft: #f3e6c4;
+  --color-terracotta: #b2543a;
+  --color-terracotta-soft: #f1dcd2;
+  --color-cream: #fbf7ef;
 }
 
 @layer base {
