@@ -1,11 +1,64 @@
 import Card from "../../components/Card";
 import GradeBadge from "../../components/GradeBadge";
-import StatTile from "../../components/StatTile";
 import DeltaBadge from "../../components/DeltaBadge";
 import MonthComparisonTable from "../../components/MonthComparisonTable";
 import { useComparison } from "../../lib/useComparison";
+import { GOLD_SERIES } from "../../lib/chartColors";
 import { fmtCr, fmtPct } from "../../lib/format";
+import { formatMonthLabel } from "../../lib/periods";
 import type { ComparisonMode, Territory } from "../../types";
+
+/** ≤5% green, 5–7% gold, >7% terracotta -- lower is better here. */
+function challengeColor(pct: number | null | undefined): string {
+  if (pct == null) return "var(--color-grade-n)";
+  if (pct <= 0.05) return "var(--color-grade-a)";
+  if (pct <= 0.07) return "var(--color-grade-b)";
+  return "var(--color-grade-c)";
+}
+
+function BillingChallengesChart({ territories }: { territories: Territory[] }) {
+  const maxIncome = Math.max(1, ...territories.map((t) => t.billingChallenges?.monthlyIncomeBilled ?? 0));
+
+  return (
+    <div>
+      <div className="flex h-36 items-end gap-7 border-b border-hairline px-2 pb-0">
+        {territories.map((t) => {
+          const bc = t.billingChallenges;
+          const incomeH = bc?.monthlyIncomeBilled != null ? Math.max(4, (bc.monthlyIncomeBilled / maxIncome) * 120) : 0;
+          const challengeH =
+            bc?.billingChallengesPct != null ? Math.max(4, Math.min(120, bc.billingChallengesPct * 800)) : 0;
+          return (
+            <div key={t.month} className="flex flex-1 flex-col items-center gap-2">
+              <div className="flex items-end gap-2.5" style={{ height: 120 }}>
+                <div
+                  className="w-7 rounded-t"
+                  style={{ height: incomeH, backgroundColor: GOLD_SERIES.actual }}
+                  title={fmtCr(bc?.monthlyIncomeBilled)}
+                />
+                <div
+                  className="w-1.5 rounded"
+                  style={{ height: challengeH, backgroundColor: challengeColor(bc?.billingChallengesPct) }}
+                  title={fmtPct(bc?.billingChallengesPct)}
+                />
+              </div>
+              <span className="text-xs font-semibold text-ink-soft">{formatMonthLabel(t.month)}</span>
+            </div>
+          );
+        })}
+      </div>
+      <div className="mt-3 flex gap-4">
+        <span className="flex items-center gap-1.5 text-xs font-medium text-ink-soft">
+          <span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: GOLD_SERIES.actual }} />
+          Income Billed
+        </span>
+        <span className="flex items-center gap-1.5 text-xs font-medium text-ink-soft">
+          <span className="inline-block h-2.5 w-1.5 rounded-sm" style={{ backgroundColor: "var(--color-grade-b)" }} />
+          Billing Challenges %
+        </span>
+      </div>
+    </div>
+  );
+}
 
 interface BillingChallengesSectionProps {
   territories: Territory[];
@@ -36,27 +89,40 @@ export default function BillingChallengesSection({
     const bc = territory.billingChallenges;
 
     return (
-      <Card title="Billing Challenges" subtitle="Monthly income vs. billing challenges">
+      <Card title="7 · Billing Challenges" subtitle="Monthly income billed vs. billing challenges %">
         {!bc ? (
-          <p className="text-sm text-slate-400">No billing challenges data for this period.</p>
+          <p className="text-sm text-muted">No billing challenges data for this period.</p>
         ) : (
           <div>
-            <div className="mb-3 flex items-center justify-between">
-              <span className="text-sm text-slate-500">{bc.territory ?? territory.territoryLabel}</span>
+            <div className="mb-4 flex items-center justify-between">
+              <span className="text-sm text-muted">{bc.territory ?? territory.territoryLabel}</span>
               <GradeBadge grade={bc.ranking} />
             </div>
-            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
-              <StatTile
-                label="Monthly Income Billed"
-                value={fmtCr(incomeComparison.current)}
-                delta={<DeltaBadge result={incomeComparison} mode={comparisonMode} />}
-              />
-              <StatTile label="Monthly Billing Challenges" value={fmtCr(bc.monthlyBillingChallenges)} />
-              <StatTile
-                label="Billing Challenges %"
-                value={fmtPct(challengesPctComparison.current)}
-                delta={<DeltaBadge result={challengesPctComparison} mode={comparisonMode} invert />}
-              />
+            <BillingChallengesChart territories={territories} />
+            <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-2">
+              <div>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-muted-2">Income Billed</span>
+                  <DeltaBadge result={incomeComparison} mode={comparisonMode} />
+                </div>
+                <div className="mt-1 font-mono text-lg font-semibold text-charcoal">
+                  {fmtCr(incomeComparison.current)}
+                </div>
+              </div>
+              <div>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-muted-2">
+                    Billing Challenges %
+                  </span>
+                  <DeltaBadge result={challengesPctComparison} mode={comparisonMode} invert />
+                </div>
+                <div
+                  className="mt-1 font-mono text-lg font-semibold"
+                  style={{ color: challengeColor(challengesPctComparison.current) }}
+                >
+                  {fmtPct(challengesPctComparison.current)}
+                </div>
+              </div>
             </div>
           </div>
         )}
@@ -76,7 +142,11 @@ export default function BillingChallengesSection({
     },
     {
       label: "Billing Challenges %",
-      values: territories.map((t) => fmtPct(t.billingChallenges?.billingChallengesPct)),
+      values: territories.map((t, i) => (
+        <span key={i} className="font-semibold" style={{ color: challengeColor(t.billingChallenges?.billingChallengesPct) }}>
+          {fmtPct(t.billingChallenges?.billingChallengesPct)}
+        </span>
+      )),
     },
     {
       label: "Ranking",
@@ -85,8 +155,11 @@ export default function BillingChallengesSection({
   ];
 
   return (
-    <Card title="Billing Challenges" subtitle="Monthly income vs. billing challenges, by month">
-      <MonthComparisonTable months={months} rows={rows} />
+    <Card title="7 · Billing Challenges" subtitle="Monthly income billed vs. billing challenges %, by month">
+      <div className="flex flex-col gap-5">
+        <BillingChallengesChart territories={territories} />
+        <MonthComparisonTable months={months} rows={rows} />
+      </div>
     </Card>
   );
 }

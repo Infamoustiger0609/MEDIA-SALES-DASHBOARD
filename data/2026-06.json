@@ -10,9 +10,9 @@
           "regionName": "Delhi",
           "businessPlanning": {
             "region": "Delhi",
-            "aopTarget": 574.8682059658538,
-            "businessConfirmed": 659,
-            "actualRevenue": 349.2117857,
+            "aopTarget": 5.748682059658538,
+            "businessConfirmed": 6.59,
+            "actualRevenue": 3.492117857,
             "actualPctOfTarget": 0.6074640797246362,
             "monthBeginningPct": 0.5299116626707132,
             "planningGrade": "C",
@@ -25,7 +25,7 @@
               "targetIndex": 0.7,
               "pctContributionOfAop": 0.7703524586354451,
               "ranking": "B",
-              "topAccountsValue": 309.9957951,
+              "topAccountsValue": 3.099957951,
               "achievement": null
             },
             "rotating": {
@@ -33,7 +33,7 @@
               "targetIndex": 0.3,
               "pctContributionOfAop": 0.22613878911877375,
               "ranking": "C",
-              "topAccountsValue": 39,
+              "topAccountsValue": 0.39,
               "achievement": null
             }
           },
@@ -101,19 +101,19 @@
           },
           "productivity": {
             "region": "Delhi",
-            "targetPerHead": 71.85852574573173,
-            "targetPerHeadNational": 56.975919275869224,
-            "actual": 43.6514732125,
-            "nationalActual": 87.98243348575339,
+            "targetPerHead": 0.7185852574573173,
+            "targetPerHeadNational": 0.5697591927586922,
+            "actual": 0.436514732125,
+            "nationalActual": 0.8798243348575339,
             "actualPct": 0.6074640797246362,
             "ranking": "C"
           },
           "salesQuality": {
             "Off Screen": {
               "region": "Delhi",
-              "ly": 2.7067018000000003,
-              "lm": 3.2205,
-              "cm": 10.510967,
+              "ly": 0.027067018,
+              "lm": 0.032205,
+              "cm": 0.10510967,
               "cmPctContribution": null,
               "ranking": "C"
             },
@@ -136,7 +136,7 @@
             "IP sales Deals": {
               "region": "Delhi",
               "ly": null,
-              "lm": 0.2,
+              "lm": 0.002,
               "cm": null,
               "cmPctContribution": null,
               "ranking": "C"
@@ -144,7 +144,7 @@
             "Zeouk box deal": {
               "region": "Delhi",
               "ly": null,
-              "lm": 1,
+              "lm": 0.01,
               "cm": null,
               "cmPctContribution": null,
               "ranking": "C"
@@ -163,9 +163,9 @@
           "regionName": "East",
           "businessPlanning": {
             "region": "East",
-            "aopTarget": 207,
-            "businessConfirmed": 212,
-            "actualRevenue": 279.71693990000017,
+            "aopTarget": 2.07,
+            "businessConfirmed": 2.12,
+            "actualRevenue": 2.7971693990000017,
             "actualPctOfTarget": 1.3512895647343004,
             "monthBeginningPct": 1.3194195278301895,
             "planningGrade": "A+",
@@ -178,7 +178,7 @@
               "targetIndex": 0.7,
               "pctContributionOfAop": 0.6310489399748578,
               "ranking": "C",
-              "topAccountsValue": 253.93898040000016,
+              "topAccountsValue": 2.5393898040000016,
               "achievement": null
             },
             "rotating": {
@@ -186,7 +186,7 @@
               "targetIndex": 0.3,
               "pctContributionOfAop": 0.15075919274584915,
               "ranking": "C",
-              "topAccountsValue": 26,
+              "topAccountsValue": 0.26,
               "achievement": null
             }
           },
@@ -254,19 +254,19 @@
           },
           "productivity": {
             "region": "East",
-            "targetPerHead": 69,
-            "targetPerHeadNational": 56.975919275869224,
-            "actual": 93.23897996666672,
-            "nationalActual": 87.98243348575339,
+            "targetPerHead": 0.69,
+            "targetPerHeadNational": 0.5697591927586922,
+            "actual": 0.9323897996666672,
+            "nationalActual": 0.8798243348575339,
             "actualPct": 1.3512895647343002,
             "ranking": "A+"
           },
           "salesQuality": {
             "Off Screen": {
               "region": "East",
-              "ly": 7.9186662000000005,
-              "lm": 15.604540600000002,
-              "cm": 15.2152458,
+              "ly": 0.079186662,
+              "lm": 0.15604540600000003,
+              "cm": 0.152152458,
               "cmPctContribution": null,
               "ranking": "C"
             },
@@ -337,9 +337,9 @@
           "regionName": "West + North",
           "businessPlanning": {
             "region": "West + North",
-            "aopTarget": 753,
-            "businessConfirmed": 541,
-            "actualRevenue": 537.6682853000002,
+            "aopTarget": 7.53,
+            "businessConfirmed": 5.41,
+            "actualRevenue": 5.376682853000002,
             "actualPctOfTarget": 0.7140349074369192,
             "monthBeginningPct": 0.993841562476895,
             "planningGrade": "C",
@@ -352,7 +352,7 @@
               "targetIndex": 0.7,
               "pctContributionOfAop": 0.7892240561563271,
               "ranking": "B",
-              "topAccountsValue": 416,
+              "topAccountsValue": 4.16,
               "achievement": null
             },
             "rotating": {
@@ -360,7 +360,7 @@
               "targetIndex": 0.3,
               "pctContributionOfAop": 0.5385935604249678,
               "ranking": "C",
-              "topAccountsValue": 121.6682853000002,
+              "topAccountsValue": 1.216682853000002,
               "achievement": null
             }
           },
@@ -428,10 +428,10 @@
           },
           "productivity": {
             "region": "West + North",
-            "targetPerHead": 39.63157894736842,
-            "targetPerHeadNational": 56.975919275869224,
-            "actual": 28.29830975263158,
-            "nationalActual": 87.98243348575339,
+            "targetPerHead": 0.3963157894736842,
+            "targetPerHeadNational": 0.5697591927586922,
+            "actual": 0.28298309752631584,
+            "nationalActual": 0.8798243348575339,
             "actualPct": 0.7140343762284198,
             "ranking": "C"
           },
@@ -439,16 +439,16 @@
             "Off Screen": {
               "region": "West + North",
               "ly": null,
-              "lm": 76.91,
-              "cm": 89.03870389999999,
+              "lm": 0.7691,
+              "cm": 0.8903870389999998,
               "cmPctContribution": 0.16488648870370368,
               "ranking": "A"
             },
             "Innovations": {
               "region": "West + North",
               "ly": null,
-              "lm": 10.4,
-              "cm": 0.75,
+              "lm": 0.10400000000000001,
+              "cm": 0.0075,
               "cmPctContribution": 0.001388888888888889,
               "ranking": "C"
             },
@@ -479,8 +479,8 @@
             "Brandscap deal": {
               "region": "West + North",
               "ly": null,
-              "lm": 5.88,
-              "cm": 5.68,
+              "lm": 0.0588,
+              "cm": 0.056799999999999996,
               "cmPctContribution": 0.010518518518518517,
               "ranking": "C"
             }
@@ -511,9 +511,9 @@
           "regionName": "KA+KL",
           "businessPlanning": {
             "region": "KA+KL",
-            "aopTarget": 343,
-            "businessConfirmed": 343,
-            "actualRevenue": 130,
+            "aopTarget": 3.43,
+            "businessConfirmed": 3.43,
+            "actualRevenue": 1.3,
             "actualPctOfTarget": 0.37900874635568516,
             "monthBeginningPct": 0.37900874635568516,
             "planningGrade": "C",
@@ -526,7 +526,7 @@
               "targetIndex": 0.7,
               "pctContributionOfAop": 0.5219457750937109,
               "ranking": "C",
-              "topAccountsValue": 125.31918059999998,
+              "topAccountsValue": 1.2531918059999998,
               "achievement": null
             },
             "rotating": {
@@ -534,7 +534,7 @@
               "targetIndex": 0.3,
               "pctContributionOfAop": 0.04859086491739553,
               "ranking": "C",
-              "topAccountsValue": 5,
+              "topAccountsValue": 0.05,
               "achievement": null
             }
           },
@@ -602,19 +602,19 @@
           },
           "productivity": {
             "region": "KA+KL",
-            "targetPerHead": 38.111111111111114,
-            "targetPerHeadNational": 56.975919275869224,
-            "actual": 14.453188288888887,
-            "nationalActual": 87.98243348575339,
+            "targetPerHead": 0.3811111111111111,
+            "targetPerHeadNational": 0.5697591927586922,
+            "actual": 0.14453188288888888,
+            "nationalActual": 0.8798243348575339,
             "actualPct": 0.37923817667638476,
             "ranking": "C"
           },
           "salesQuality": {
             "Off Screen": {
               "region": "KA+KL",
-              "ly": 3,
-              "lm": 1,
-              "cm": 6,
+              "ly": 0.03,
+              "lm": 0.01,
+              "cm": 0.06,
               "cmPctContribution": 0.01963507104007727,
               "ranking": "C"
             },
@@ -622,7 +622,7 @@
               "region": "KA+KL",
               "ly": null,
               "lm": null,
-              "cm": 1,
+              "cm": 0.01,
               "cmPctContribution": null,
               "ranking": "C"
             },
@@ -638,7 +638,7 @@
               "region": "KA+KL",
               "ly": null,
               "lm": null,
-              "cm": 1,
+              "cm": 0.01,
               "cmPctContribution": null,
               "ranking": "C"
             },
@@ -678,9 +678,9 @@
           "regionName": "West (Mum)",
           "businessPlanning": {
             "region": "West (Mum)",
-            "aopTarget": 800,
-            "businessConfirmed": 840,
-            "actualRevenue": 755.6889893,
+            "aopTarget": 8.0,
+            "businessConfirmed": 8.4,
+            "actualRevenue": 7.556889893,
             "actualPctOfTarget": 0.944611236625,
             "monthBeginningPct": 0.8996297491666667,
             "planningGrade": "A",
@@ -693,7 +693,7 @@
               "targetIndex": 0.7,
               "pctContributionOfAop": 1.1568889432142857,
               "ranking": "A+",
-              "topAccountsValue": 647.8578081999999,
+              "topAccountsValue": 6.478578081999999,
               "achievement": null
             },
             "rotating": {
@@ -701,7 +701,7 @@
               "targetIndex": 0.3,
               "pctContributionOfAop": 0.45000000000000007,
               "ranking": "C",
-              "topAccountsValue": 108,
+              "topAccountsValue": 1.08,
               "achievement": null
             }
           },
@@ -769,10 +769,10 @@
           },
           "productivity": {
             "region": "West (Mum)",
-            "targetPerHead": 100,
-            "targetPerHeadNational": 56.975919275869224,
-            "actual": 94.4611236625,
-            "nationalActual": 87.98243348575339,
+            "targetPerHead": 1.0,
+            "targetPerHeadNational": 0.5697591927586922,
+            "actual": 0.944611236625,
+            "nationalActual": 0.8798243348575339,
             "actualPct": 0.944611236625,
             "ranking": "A"
           },
@@ -780,8 +780,8 @@
             "Off Screen": {
               "region": "West (Mum)",
               "ly": null,
-              "lm": 65.3859917,
-              "cm": 143.42,
+              "lm": 0.653859917,
+              "cm": 1.4342,
               "cmPctContribution": 0.1897089947089947,
               "ranking": "A"
             },
@@ -789,15 +789,15 @@
               "region": "West (Mum)",
               "ly": null,
               "lm": null,
-              "cm": 97.62,
+              "cm": 0.9762000000000001,
               "cmPctContribution": 0.12912698412698415,
               "ranking": "A"
             },
             "Format Sponsorships": {
               "region": "West (Mum)",
               "ly": null,
-              "lm": 38.32,
-              "cm": 37.087911999999996,
+              "lm": 0.3832,
+              "cm": 0.37087911999999995,
               "cmPctContribution": 0.049058084656084654,
               "ranking": "C"
             },
@@ -805,7 +805,7 @@
               "region": "West (Mum)",
               "ly": null,
               "lm": null,
-              "cm": 1,
+              "cm": 0.01,
               "cmPctContribution": null,
               "ranking": "C"
             },
@@ -820,8 +820,8 @@
             "Brandscap deal": {
               "region": "West (Mum)",
               "ly": null,
-              "lm": 0.89,
-              "cm": 1.6438356,
+              "lm": 0.0089,
+              "cm": 0.016438356,
               "cmPctContribution": 0.0021743857142857144,
               "ranking": "C"
             }

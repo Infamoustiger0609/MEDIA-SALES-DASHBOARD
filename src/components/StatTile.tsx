@@ -9,13 +9,13 @@ interface StatTileProps {
 
 export default function StatTile({ label, value, sublabel, delta }: StatTileProps) {
   return (
-    <div className="rounded-lg border border-charcoal/5 bg-gold/[0.06] px-3.5 py-3">
-      <div className="text-xs font-medium text-slate-500">{label}</div>
+    <div className="rounded-lg border border-hairline bg-gold-soft/25 px-3.5 py-3">
+      <div className="text-xs font-medium uppercase tracking-wide text-muted">{label}</div>
       <div className="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-1">
-        <span className="text-lg font-semibold tabular-nums text-slate-900">{value}</span>
+        <span className="font-mono text-lg font-semibold tabular-nums text-charcoal">{value}</span>
         {delta}
       </div>
-      {sublabel && <div className="mt-0.5 text-xs text-slate-400">{sublabel}</div>}
+      {sublabel && <div className="mt-0.5 text-xs text-muted-2">{sublabel}</div>}
     </div>
   );
 }

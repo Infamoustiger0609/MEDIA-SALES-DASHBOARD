@@ -1,12 +1,27 @@
 import { flexRender, getCoreRowModel, useReactTable, type ColumnDef } from "@tanstack/react-table";
-import { Bar, BarChart, CartesianGrid, Cell, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import Card from "../../components/Card";
 import GradeBadge from "../../components/GradeBadge";
 import MonthComparisonTable from "../../components/MonthComparisonTable";
-import { BRAND_ACCENT, CATEGORICAL, CHART_CHROME } from "../../lib/chartColors";
+import { BRAND_ACCENT, CHART_CHROME, GOLD_SERIES } from "../../lib/chartColors";
 import { fmtInt, fmtPct } from "../../lib/format";
 import { formatMonthLabel } from "../../lib/periods";
 import type { PriceControlChannel, SubRegion, Territory } from "../../types";
+
+function MiniDiscountBar({ ly, cm }: { ly: number | null; cm: number | null }) {
+  const lyPct = ly != null ? Math.max(0, Math.min(100, ly * 100)) : 0;
+  const cmPct = cm != null ? Math.max(0, Math.min(100, cm * 100)) : 0;
+  return (
+    <div className="flex items-center gap-1.5">
+      <div className="h-2 w-16 overflow-hidden rounded bg-app-bg">
+        <div className="h-full rounded" style={{ width: `${lyPct}%`, backgroundColor: GOLD_SERIES.target }} />
+      </div>
+      <div className="h-2 w-16 overflow-hidden rounded bg-app-bg">
+        <div className="h-full rounded" style={{ width: `${cmPct}%`, backgroundColor: GOLD_SERIES.actual }} />
+      </div>
+    </div>
+  );
+}
 
 const columns: ColumnDef<PriceControlChannel>[] = [
   { header: "Channel", accessorKey: "channel" },
@@ -40,6 +55,11 @@ const columns: ColumnDef<PriceControlChannel>[] = [
     accessorKey: "cmContributionPct",
     cell: (info) => fmtPct(info.getValue<number | null>()),
   },
+  {
+    header: "LY vs CM",
+    id: "lyVsCm",
+    cell: (info) => <MiniDiscountBar ly={info.row.original.lyAvgDiscount} cm={info.row.original.cmAvgDiscount} />,
+  },
 ];
 
 function overallDiscountOf(sr: SubRegion | undefined): { ly: number | null; cm: number | null; ranking: string | null } {
@@ -57,19 +77,19 @@ function PriceControlSubBlock({ subRegion, showLabel }: { subRegion: SubRegion; 
 
   const { ly: lyOverall, cm: cmOverall } = overallDiscountOf(subRegion);
   const chartData = [
-    { name: "LY", value: lyOverall ?? 0, hasData: lyOverall != null },
-    { name: "CM", value: cmOverall ?? 0, hasData: cmOverall != null },
+    { name: "LY", value: lyOverall ?? 0, hasData: lyOverall != null, color: GOLD_SERIES.target },
+    { name: "CM", value: cmOverall ?? 0, hasData: cmOverall != null, color: GOLD_SERIES.actual },
   ];
 
   return (
     <div>
       <div className="mb-2 flex items-center justify-between">
         {showLabel ? (
-          <h4 className="text-sm font-semibold text-slate-800">{subRegion.regionName}</h4>
+          <h4 className="text-sm font-semibold text-charcoal">{subRegion.regionName}</h4>
         ) : (
           <span />
         )}
-        <div className="flex items-center gap-2 text-xs text-slate-500">
+        <div className="flex items-center gap-2 text-xs text-muted">
           Overall discount ranking <GradeBadge grade={pc.ranking} />
         </div>
       </div>
@@ -97,8 +117,8 @@ function PriceControlSubBlock({ subRegion, showLabel }: { subRegion: SubRegion; 
                 contentStyle={{ fontSize: 12, borderRadius: 8, borderTop: `2px solid ${BRAND_ACCENT.gold}` }}
               />
               <Bar dataKey="value" radius={[4, 4, 0, 0]} maxBarSize={56}>
-                {chartData.map((entry, i) => (
-                  <Cell key={entry.name} fill={entry.hasData ? CATEGORICAL[i] : CHART_CHROME.gridline} />
+                {chartData.map((entry) => (
+                  <Cell key={entry.name} fill={entry.hasData ? entry.color : CHART_CHROME.gridline} />
                 ))}
               </Bar>
             </BarChart>
@@ -106,23 +126,26 @@ function PriceControlSubBlock({ subRegion, showLabel }: { subRegion: SubRegion; 
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[560px] text-left text-xs">
+          <table className="w-full min-w-[620px] text-left text-xs">
             <thead>
               {table.getHeaderGroups().map((hg) => (
-                <tr key={hg.id} className="text-slate-400">
+                <tr key={hg.id} className="text-muted-2 uppercase tracking-wide">
                   {hg.headers.map((h) => (
-                    <th key={h.id} className="pb-2 pr-3 font-medium">
+                    <th key={h.id} className="pb-2 pr-3 font-semibold">
                       {flexRender(h.column.columnDef.header, h.getContext())}
                     </th>
                   ))}
                 </tr>
               ))}
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-hairline">
               {table.getRowModel().rows.map((row) => (
                 <tr key={row.id}>
                   {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="py-2 pr-3 tabular-nums text-slate-600 first:font-medium first:text-slate-700">
+                    <td
+                      key={cell.id}
+                      className="py-2 pr-3 font-mono tabular-nums text-ink-soft first:font-sans first:font-semibold first:text-charcoal"
+                    >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </td>
                   ))}
@@ -152,13 +175,13 @@ export default function PriceControlSection({ territories }: PriceControlSection
     const regions = territory.subRegions.filter((sr) => sr.priceControl && sr.priceControl.channels.length > 0);
 
     return (
-      <Card title="Price Control / Discount" subtitle="Channel breakdown and LY vs. CM overall discount">
+      <Card title="3 · Price Control / Discount" subtitle="Channel breakdown and LY vs. CM overall discount">
         <div className="flex flex-col gap-6">
           {regions.map((sr) => (
             <PriceControlSubBlock key={sr.regionName} subRegion={sr} showLabel={territory.subRegions.length > 1} />
           ))}
           {regions.length === 0 && (
-            <p className="text-sm text-slate-400">No price control data for this period.</p>
+            <p className="text-sm text-muted">No price control data for this period.</p>
           )}
         </div>
       </Card>
@@ -172,20 +195,12 @@ export default function PriceControlSection({ territories }: PriceControlSection
   );
 
   return (
-    <Card title="Price Control / Discount" subtitle="Overall LY vs. CM discount, grouped by month">
+    <Card title="3 · Price Control / Discount" subtitle="Overall LY vs. CM discount, grouped by month">
       <div className="flex flex-col gap-6">
         {regionNames.map((regionName) => {
           const perMonth = territories.map((t) =>
             overallDiscountOf(t.subRegions.find((sr) => sr.regionName === regionName)),
           );
-
-          const chartData = ["LY", "CM"].map((name) => {
-            const row: Record<string, string | number> = { name };
-            perMonth.forEach((d, i) => {
-              row[monthLabels[i]] = (name === "LY" ? d.ly : d.cm) ?? 0;
-            });
-            return row;
-          });
 
           const rows = [
             { label: "LY Avg. Disc.", values: perMonth.map((d) => fmtPct(d.ly)) },
@@ -199,45 +214,38 @@ export default function PriceControlSection({ territories }: PriceControlSection
           return (
             <div key={regionName}>
               {regionNames.length > 1 && (
-                <h4 className="mb-2 text-sm font-semibold text-slate-800">{regionName}</h4>
+                <h4 className="mb-2 text-sm font-semibold text-charcoal">{regionName}</h4>
               )}
-              <div className="grid grid-cols-1 gap-4 lg:grid-cols-[200px_1fr]">
-                <div className="h-40 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={chartData} barCategoryGap="35%">
-                      <CartesianGrid vertical={false} stroke={CHART_CHROME.gridline} />
-                      <XAxis
-                        dataKey="name"
-                        tick={{ fill: CHART_CHROME.mutedText, fontSize: 12 }}
-                        axisLine={{ stroke: CHART_CHROME.axis }}
-                        tickLine={false}
-                      />
-                      <YAxis
-                        tickFormatter={(v: number) => `${(v * 100).toFixed(0)}%`}
-                        tick={{ fill: CHART_CHROME.mutedText, fontSize: 12 }}
-                        axisLine={false}
-                        tickLine={false}
-                        width={40}
-                      />
-                      <Tooltip
-                        formatter={(value) => `${(Number(value) * 100).toFixed(1)}%`}
-                        contentStyle={{ fontSize: 12, borderRadius: 8, borderTop: `2px solid ${BRAND_ACCENT.gold}` }}
-                      />
-                      <Legend wrapperStyle={{ fontSize: 12 }} />
-                      {monthLabels.map((label, i) => (
-                        <Bar key={label} dataKey={label} fill={CATEGORICAL[i]} radius={[4, 4, 0, 0]} maxBarSize={40} />
-                      ))}
-                    </BarChart>
-                  </ResponsiveContainer>
+              <div className="mb-4 flex flex-col gap-2">
+                {perMonth.map((d, i) => (
+                  <div key={months[i]} className="flex items-center gap-3">
+                    <span className="w-16 flex-none text-xs font-semibold text-ink-soft">{monthLabels[i]}</span>
+                    <MiniDiscountBar ly={d.ly} cm={d.cm} />
+                  </div>
+                ))}
+                <div className="flex gap-4 pl-[76px]">
+                  <span className="flex items-center gap-1.5 text-xs font-medium text-ink-soft">
+                    <span
+                      className="inline-block h-2.5 w-2.5 rounded-sm"
+                      style={{ backgroundColor: GOLD_SERIES.target }}
+                    />
+                    LY
+                  </span>
+                  <span className="flex items-center gap-1.5 text-xs font-medium text-ink-soft">
+                    <span
+                      className="inline-block h-2.5 w-2.5 rounded-sm"
+                      style={{ backgroundColor: GOLD_SERIES.actual }}
+                    />
+                    CM
+                  </span>
                 </div>
-
-                <MonthComparisonTable months={months} rows={rows} />
               </div>
+              <MonthComparisonTable months={months} rows={rows} />
             </div>
           );
         })}
         {regionNames.length === 0 && (
-          <p className="text-sm text-slate-400">No price control data for the selected months.</p>
+          <p className="text-sm text-muted">No price control data for the selected months.</p>
         )}
       </div>
     </Card>

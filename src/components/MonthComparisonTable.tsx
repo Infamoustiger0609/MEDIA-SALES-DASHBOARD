@@ -22,21 +22,21 @@ export default function MonthComparisonTable({
     <div className="overflow-x-auto">
       <table className="w-full min-w-[420px] text-left text-xs">
         <thead>
-          <tr className="text-slate-400">
-            <th className="pb-2 pr-3 font-medium">{metricHeader}</th>
+          <tr className="text-muted-2 uppercase tracking-wide">
+            <th className="pb-2 pr-3 font-semibold">{metricHeader}</th>
             {months.map((m) => (
-              <th key={m} className="pb-2 pr-3 font-medium">
+              <th key={m} className="pb-2 pr-3 font-semibold">
                 {formatMonthLabel(m)}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100">
+        <tbody className="divide-y divide-hairline">
           {rows.map((row) => (
             <tr key={row.label}>
-              <td className="py-2 pr-3 font-medium text-slate-700">{row.label}</td>
+              <td className="py-2 pr-3 font-medium text-charcoal">{row.label}</td>
               {row.values.map((v, i) => (
-                <td key={months[i]} className="py-2 pr-3 tabular-nums text-slate-600">
+                <td key={months[i]} className="py-2 pr-3 font-mono tabular-nums text-ink-soft">
                   {v}
                 </td>
               ))}

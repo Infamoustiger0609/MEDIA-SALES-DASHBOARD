@@ -95,6 +95,21 @@ def is_blank_row(ws, row, min_col=2, max_col=9):
 # region label was in column B of that row.
 # ---------------------------------------------------------------------------
 
+def lakhs_to_cr(v):
+    """Business Planning / A/c Bucket / Sales Quality / Productivity figures
+    in the source workbook are in Rs. Lakhs, not Rs. Crore, based on
+    cross-section scale analysis (see CLAUDE.md 'Units' note) -- e.g. a
+    combined AOP Target of ~2,678 read as Crore would exceed PVR INOX's
+    entire annual company revenue for a single month of ad-sales target
+    alone, but is a plausible ~Rs. 26.78 Cr/month when read as Lakhs.
+    Financial Control / Billing Challenges figures are NOT affected --
+    those are already in Crore in the source file.
+    CONFIRM WITH FINANCE BEFORE RELYING ON THIS if not already confirmed."""
+    if v is None or isinstance(v, str):
+        return v
+    return v / 100
+
+
 def extract_business_planning(ws):
     """Returns list of {region, aopTarget, businessConfirmed, actualRevenue,
     actualPctOfTarget, monthBeginningPct, planningGrade, controlGrade}"""
@@ -118,9 +133,9 @@ def extract_business_planning(ws):
         if region and vals[1] is not None:  # must have an AOP Target value to count as a real data row
             results.append({
                 "region": region,
-                "aopTarget": clean(vals[1]),
-                "businessConfirmed": clean(vals[2]),
-                "actualRevenue": clean(vals[3]),
+                "aopTarget": lakhs_to_cr(clean(vals[1])),
+                "businessConfirmed": lakhs_to_cr(clean(vals[2])),
+                "actualRevenue": lakhs_to_cr(clean(vals[3])),
                 "actualPctOfTarget": clean(vals[4]),
                 "monthBeginningPct": clean(vals[5]),
                 "planningGrade": clean(vals[6]),
@@ -155,7 +170,7 @@ def extract_ac_bucket_blocks(ws):
                 "targetIndex": clean(vals[2]),
                 "pctContributionOfAop": clean(vals[3]),
                 "ranking": clean(vals[4]),
-                "topAccountsValue": clean(vals[7]),
+                "topAccountsValue": lakhs_to_cr(clean(vals[7])),
                 "achievement": clean(vals[8]) if len(vals) > 8 else None,
             }
 
@@ -265,9 +280,9 @@ def extract_sales_quality_blocks(ws):
             if region:
                 result[name].append({
                     "region": region,
-                    "ly": clean(vals[1]),
-                    "lm": clean(vals[2]),
-                    "cm": clean(vals[3]),
+                    "ly": lakhs_to_cr(clean(vals[1])),
+                    "lm": lakhs_to_cr(clean(vals[2])),
+                    "cm": lakhs_to_cr(clean(vals[3])),
                     "cmPctContribution": clean(vals[6]),
                     "ranking": clean(vals[7]),
                 })
@@ -287,10 +302,10 @@ def extract_productivity_blocks(ws):
         vals = row_values(ws, data_row, 2, 8)
         blocks.append({
             "region": region_label,
-            "targetPerHead": clean(vals[0]),
-            "targetPerHeadNational": clean(vals[1]),
-            "actual": clean(vals[2]),
-            "nationalActual": clean(vals[4]),
+            "targetPerHead": lakhs_to_cr(clean(vals[0])),
+            "targetPerHeadNational": lakhs_to_cr(clean(vals[1])),
+            "actual": lakhs_to_cr(clean(vals[2])),
+            "nationalActual": lakhs_to_cr(clean(vals[4])),
             "actualPct": clean(vals[5]),
             "ranking": clean(vals[6]),
         })

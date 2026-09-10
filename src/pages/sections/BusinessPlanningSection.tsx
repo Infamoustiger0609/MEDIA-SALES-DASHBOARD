@@ -33,9 +33,9 @@ function SubRegionCard({ manager, subRegion, comparisonMode }: SubRegionCardProp
   );
 
   return (
-    <div className="rounded-lg border border-slate-100 p-4">
+    <div className="rounded-lg border border-hairline p-4">
       <div className="mb-3 flex items-center justify-between">
-        <h4 className="text-sm font-semibold text-slate-800">{subRegion.regionName}</h4>
+        <h4 className="text-sm font-semibold text-charcoal">{subRegion.regionName}</h4>
         <div className="flex gap-1.5">
           <GradeBadge grade={bp?.planningGrade} label="Planning" />
           <GradeBadge grade={bp?.controlGrade} label="Control" />
@@ -119,7 +119,7 @@ export default function BusinessPlanningSection({
 
     return (
       <Card
-        title="Business Planning & Control"
+        title="1 · Business Planning & Control"
         subtitle={showCombined ? "Per sub-region, with combined total" : undefined}
       >
         <div className="flex flex-col gap-3">
@@ -133,8 +133,8 @@ export default function BusinessPlanningSection({
           ))}
 
           {showCombined && (
-            <div className="rounded-lg border border-slate-900/10 bg-slate-50 p-4">
-              <h4 className="mb-3 text-sm font-semibold text-slate-800">Combined Total</h4>
+            <div className="rounded-lg border border-hairline bg-gold-soft/25 p-4">
+              <h4 className="mb-3 text-sm font-semibold text-charcoal">Combined Total</h4>
               <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
                 <StatTile
                   label="AOP Target"
@@ -164,12 +164,12 @@ export default function BusinessPlanningSection({
   const showCombined = regionNames.length > 1;
 
   return (
-    <Card title="Business Planning & Control" subtitle="Comparison across selected months">
+    <Card title="1 · Business Planning & Control" subtitle="Comparison across selected months">
       <div className="flex flex-col gap-5">
         {regionNames.map((regionName) => (
           <div key={regionName}>
             {regionNames.length > 1 && (
-              <h4 className="mb-2 text-sm font-semibold text-slate-800">{regionName}</h4>
+              <h4 className="mb-2 text-sm font-semibold text-charcoal">{regionName}</h4>
             )}
             <MonthComparisonTable months={months} rows={regionComparisonRows(regionName, territories)} />
           </div>
@@ -177,7 +177,7 @@ export default function BusinessPlanningSection({
 
         {showCombined && (
           <div>
-            <h4 className="mb-2 text-sm font-semibold text-slate-800">Combined Total</h4>
+            <h4 className="mb-2 text-sm font-semibold text-charcoal">Combined Total</h4>
             <MonthComparisonTable months={months} rows={combinedComparisonRows(territories)} />
           </div>
         )}

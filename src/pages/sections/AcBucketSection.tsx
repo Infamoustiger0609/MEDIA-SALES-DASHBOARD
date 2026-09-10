@@ -1,11 +1,10 @@
-import { Bar, BarChart, CartesianGrid, Cell, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import Card from "../../components/Card";
 import GradeBadge from "../../components/GradeBadge";
 import MonthComparisonTable from "../../components/MonthComparisonTable";
-import { BRAND_ACCENT, CATEGORICAL, CHART_CHROME } from "../../lib/chartColors";
+import { GOLD_SERIES } from "../../lib/chartColors";
 import { fmtCr, fmtPct } from "../../lib/format";
 import { formatMonthLabel } from "../../lib/periods";
-import type { AcBucket, Territory } from "../../types";
+import type { AcBucket, AcBucketEntry, Territory } from "../../types";
 
 interface AcBucketSectionProps {
   territories: Territory[];
@@ -19,6 +18,49 @@ function acBucketOf(t: Territory, regionName: string): AcBucket | null {
   return t.subRegions.find((sr) => sr.regionName === regionName)?.acBucket ?? null;
 }
 
+/** A single Key+Growth (gold) / Rotating (pale tan) segmented bar, each
+ * segment's width its own % contribution to AOP -- unfilled remainder is
+ * AOP outside these two buckets. */
+function AcBucketBar({ keyGrowth, rotating }: { keyGrowth: AcBucketEntry | null; rotating: AcBucketEntry | null }) {
+  const keyPct = keyGrowth?.pctContributionOfAop != null ? Math.max(0, keyGrowth.pctContributionOfAop * 100) : 0;
+  const rotPct = rotating?.pctContributionOfAop != null ? Math.max(0, rotating.pctContributionOfAop * 100) : 0;
+  return (
+    <div className="flex h-6 w-full overflow-hidden rounded-md bg-app-bg">
+      {keyPct > 0 && (
+        <div
+          className="flex items-center justify-center overflow-hidden whitespace-nowrap text-[11px] font-bold text-cream"
+          style={{ width: `${keyPct}%`, backgroundColor: GOLD_SERIES.actual }}
+        >
+          {keyPct >= 12 ? fmtPct(keyGrowth?.pctContributionOfAop) : ""}
+        </div>
+      )}
+      {rotPct > 0 && (
+        <div
+          className="flex items-center justify-center overflow-hidden whitespace-nowrap text-[11px] font-bold text-ink-soft"
+          style={{ width: `${rotPct}%`, backgroundColor: GOLD_SERIES.target }}
+        >
+          {rotPct >= 12 ? fmtPct(rotating?.pctContributionOfAop) : ""}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function BucketLegend() {
+  return (
+    <div className="mt-2 flex gap-4">
+      <span className="flex items-center gap-1.5 text-xs font-medium text-ink-soft">
+        <span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: GOLD_SERIES.actual }} />
+        Key+Growth
+      </span>
+      <span className="flex items-center gap-1.5 text-xs font-medium text-ink-soft">
+        <span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: GOLD_SERIES.target }} />
+        Rotating
+      </span>
+    </div>
+  );
+}
+
 export default function AcBucketSection({ territories }: AcBucketSectionProps) {
   if (territories.length === 0) return null;
 
@@ -27,79 +69,42 @@ export default function AcBucketSection({ territories }: AcBucketSectionProps) {
     const regionsWithData = territory.subRegions.filter((sr) => sr.acBucket);
 
     return (
-      <Card title="A/c Bucket" subtitle="Key + Growth vs. Rotating contribution to AOP">
+      <Card title="2 · A/c Bucket — Key+Growth vs. Rotating" subtitle="Contribution to AOP">
         <div className="flex flex-col gap-6">
           {regionsWithData.map((sr) => {
             const bucket = sr.acBucket!;
-            const chartData = [
-              {
-                name: bucket.keyGrowth?.division ?? "Key + Growth",
-                value: bucket.keyGrowth?.pctContributionOfAop ?? 0,
-                hasData: bucket.keyGrowth?.pctContributionOfAop != null,
-              },
-              {
-                name: bucket.rotating?.division ?? "Rotating",
-                value: bucket.rotating?.pctContributionOfAop ?? 0,
-                hasData: bucket.rotating?.pctContributionOfAop != null,
-              },
-            ];
 
             return (
               <div key={sr.regionName}>
                 {territory.subRegions.length > 1 && (
-                  <h4 className="mb-2 text-sm font-semibold text-slate-800">{sr.regionName}</h4>
+                  <h4 className="mb-2 text-sm font-semibold text-charcoal">{sr.regionName}</h4>
                 )}
-                <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                  <div className="h-48 w-full">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={chartData} barCategoryGap="30%">
-                        <CartesianGrid vertical={false} stroke={CHART_CHROME.gridline} />
-                        <XAxis
-                          dataKey="name"
-                          tick={{ fill: CHART_CHROME.mutedText, fontSize: 12 }}
-                          axisLine={{ stroke: CHART_CHROME.axis }}
-                          tickLine={false}
-                        />
-                        <YAxis
-                          tickFormatter={(v: number) => `${(v * 100).toFixed(0)}%`}
-                          tick={{ fill: CHART_CHROME.mutedText, fontSize: 12 }}
-                          axisLine={false}
-                          tickLine={false}
-                          width={40}
-                        />
-                        <Tooltip
-                          formatter={(value) => [`${(Number(value) * 100).toFixed(1)}%`, "% of AOP"]}
-                          contentStyle={{ fontSize: 12, borderRadius: 8, borderTop: `2px solid ${BRAND_ACCENT.gold}` }}
-                        />
-                        <Bar dataKey="value" radius={[4, 4, 0, 0]} maxBarSize={56}>
-                          {chartData.map((entry, i) => (
-                            <Cell key={entry.name} fill={entry.hasData ? CATEGORICAL[i] : CHART_CHROME.gridline} />
-                          ))}
-                        </Bar>
-                      </BarChart>
-                    </ResponsiveContainer>
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:items-center">
+                  <div>
+                    <AcBucketBar keyGrowth={bucket.keyGrowth} rotating={bucket.rotating} />
+                    <BucketLegend />
                   </div>
 
                   <div className="overflow-x-auto">
                     <table className="w-full min-w-[420px] text-left text-xs">
                       <thead>
-                        <tr className="text-slate-400">
-                          <th className="pb-2 font-medium">Division</th>
-                          <th className="pb-2 font-medium">Target Idx</th>
-                          <th className="pb-2 font-medium">% of AOP</th>
-                          <th className="pb-2 font-medium">Top A/Cs Value</th>
-                          <th className="pb-2 font-medium">Ranking</th>
+                        <tr className="text-muted-2 uppercase tracking-wide">
+                          <th className="pb-2 font-semibold">Division</th>
+                          <th className="pb-2 font-semibold">Target Idx</th>
+                          <th className="pb-2 font-semibold">% of AOP</th>
+                          <th className="pb-2 font-semibold">Top A/Cs Value</th>
+                          <th className="pb-2 font-semibold">Ranking</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-100">
+                      <tbody className="divide-y divide-hairline">
                         {[bucket.keyGrowth, bucket.rotating].map((b, i) => (
                           <tr key={i}>
-                            <td className="py-2 font-medium text-slate-700">{b?.division ?? "—"}</td>
-                            <td className="py-2 tabular-nums text-slate-600">{fmtPct(b?.targetIndex)}</td>
-                            <td className="py-2 tabular-nums text-slate-600">
+                            <td className="py-2 font-semibold text-charcoal">{b?.division ?? "—"}</td>
+                            <td className="py-2 font-mono tabular-nums text-ink-soft">{fmtPct(b?.targetIndex)}</td>
+                            <td className="py-2 font-mono font-semibold tabular-nums text-charcoal">
                               {fmtPct(b?.pctContributionOfAop)}
                             </td>
-                            <td className="py-2 tabular-nums text-slate-600">{fmtCr(b?.topAccountsValue)}</td>
+                            <td className="py-2 font-mono tabular-nums text-ink-soft">{fmtCr(b?.topAccountsValue)}</td>
                             <td className="py-2">
                               <GradeBadge grade={b?.ranking} />
                             </td>
@@ -114,7 +119,7 @@ export default function AcBucketSection({ territories }: AcBucketSectionProps) {
           })}
 
           {regionsWithData.length === 0 && (
-            <p className="text-sm text-slate-400">No A/c Bucket data for this period.</p>
+            <p className="text-sm text-muted">No A/c Bucket data for this period.</p>
           )}
         </div>
       </Card>
@@ -122,25 +127,14 @@ export default function AcBucketSection({ territories }: AcBucketSectionProps) {
   }
 
   const months = territories.map((t) => t.month);
-  const monthLabels = months.map(formatMonthLabel);
   const regionNames = regionNamesOf(territories).filter((regionName) =>
     territories.some((t) => acBucketOf(t, regionName)),
   );
 
   return (
-    <Card title="A/c Bucket" subtitle="Key + Growth vs. Rotating contribution to AOP, grouped by month">
+    <Card title="2 · A/c Bucket — Key+Growth vs. Rotating" subtitle="Contribution to AOP, by month">
       <div className="flex flex-col gap-6">
         {regionNames.map((regionName) => {
-          const chartData = ["Key + Growth", "Rotating"].map((name, divisionIndex) => {
-            const row: Record<string, string | number> = { name };
-            territories.forEach((t, i) => {
-              const bucket = acBucketOf(t, regionName);
-              const entry = divisionIndex === 0 ? bucket?.keyGrowth : bucket?.rotating;
-              row[monthLabels[i]] = entry?.pctContributionOfAop ?? 0;
-            });
-            return row;
-          });
-
           const rows = [
             {
               label: "Key + Growth — % of AOP",
@@ -167,46 +161,31 @@ export default function AcBucketSection({ territories }: AcBucketSectionProps) {
           return (
             <div key={regionName}>
               {regionNames.length > 1 && (
-                <h4 className="mb-2 text-sm font-semibold text-slate-800">{regionName}</h4>
+                <h4 className="mb-2 text-sm font-semibold text-charcoal">{regionName}</h4>
               )}
-              <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                <div className="h-48 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={chartData} barCategoryGap="30%">
-                      <CartesianGrid vertical={false} stroke={CHART_CHROME.gridline} />
-                      <XAxis
-                        dataKey="name"
-                        tick={{ fill: CHART_CHROME.mutedText, fontSize: 12 }}
-                        axisLine={{ stroke: CHART_CHROME.axis }}
-                        tickLine={false}
-                      />
-                      <YAxis
-                        tickFormatter={(v: number) => `${(v * 100).toFixed(0)}%`}
-                        tick={{ fill: CHART_CHROME.mutedText, fontSize: 12 }}
-                        axisLine={false}
-                        tickLine={false}
-                        width={40}
-                      />
-                      <Tooltip
-                        formatter={(value) => `${(Number(value) * 100).toFixed(1)}%`}
-                        contentStyle={{ fontSize: 12, borderRadius: 8, borderTop: `2px solid ${BRAND_ACCENT.gold}` }}
-                      />
-                      <Legend wrapperStyle={{ fontSize: 12 }} />
-                      {monthLabels.map((label, i) => (
-                        <Bar key={label} dataKey={label} fill={CATEGORICAL[i]} radius={[4, 4, 0, 0]} maxBarSize={40} />
-                      ))}
-                    </BarChart>
-                  </ResponsiveContainer>
+              <div className="mb-4 flex flex-col gap-2">
+                {territories.map((t, i) => {
+                  const bucket = acBucketOf(t, regionName);
+                  return (
+                    <div key={t.month} className="flex items-center gap-3">
+                      <span className="w-16 flex-none text-xs font-semibold text-ink-soft">
+                        {formatMonthLabel(months[i])}
+                      </span>
+                      <AcBucketBar keyGrowth={bucket?.keyGrowth ?? null} rotating={bucket?.rotating ?? null} />
+                    </div>
+                  );
+                })}
+                <div className="pl-[76px]">
+                  <BucketLegend />
                 </div>
-
-                <MonthComparisonTable months={months} rows={rows} metricHeader="Metric" />
               </div>
+              <MonthComparisonTable months={months} rows={rows} metricHeader="Metric" />
             </div>
           );
         })}
 
         {regionNames.length === 0 && (
-          <p className="text-sm text-slate-400">No A/c Bucket data for the selected months.</p>
+          <p className="text-sm text-muted">No A/c Bucket data for the selected months.</p>
         )}
       </div>
     </Card>

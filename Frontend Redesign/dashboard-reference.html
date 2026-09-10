@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#f2ece0;font-family:'IBM Plex Sans',sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:#8a5a1e}
+  a:hover{color:#a4462e}
+  ::selection{background:#b8862e;color:#fffdf9}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#f2ece0;color:#241f18;padding-bottom:80px">
+
+  <!-- ===== TOP BAR ===== -->
+  <div style="background:#241f18;padding:0 clamp(20px,4vw,56px)">
+    <div style="max-width:1440px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:20px;flex-wrap:wrap">
+      <div style="display:flex;align-items:baseline;gap:12px">
+        <span style="font:700 18px 'IBM Plex Sans',sans-serif;color:#f2ece0;letter-spacing:0.02em">PVR<span style="color:#d6a94b">INOX</span></span>
+        <span style="width:1px;height:16px;background:rgba(242,236,224,0.25)"></span>
+        <span style="font:500 13px 'IBM Plex Sans',sans-serif;color:rgba(242,236,224,0.62);letter-spacing:0.04em;text-transform:uppercase">CRD Leads Dashboard</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:18px">
+        <span style="font:500 12.5px 'IBM Plex Sans',sans-serif;color:rgba(242,236,224,0.5)">Report: CRD_Leads · refreshed Aug 2026</span>
+        <span style="width:32px;height:32px;border-radius:50%;background:#d6a94b;color:#241f18;display:flex;align-items:center;justify-content:center;font:700 13px 'IBM Plex Sans',sans-serif">MD</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:1440px;margin:0 auto;padding:0 clamp(20px,4vw,56px)">
+
+    <!-- ===== NAV PILLS ===== -->
+    <div style="display:flex;align-items:center;gap:8px;padding:20px 0 0;flex-wrap:wrap">
+      <sc-for list="{{ navItems }}" as="nav" hint-placeholder-count="5">
+        <button onClick="{{ nav.onClick }}" style="{{ nav.pillStyle }}">{{ nav.label }}</button>
+      </sc-for>
+    </div>
+
+    <!-- ===== FILTER ROW ===== -->
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0 28px;border-bottom:1px solid rgba(36,31,24,0.1);flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span style="font:600 12px 'IBM Plex Sans',sans-serif;color:#726a5c;letter-spacing:0.03em;text-transform:uppercase">Months</span>
+        <div style="display:flex;align-items:center;gap:6px;background:#fffdf9;border:1px solid rgba(36,31,24,0.12);border-radius:8px;padding:6px 8px 6px 12px;box-shadow:0 1px 2px rgba(36,31,24,0.04)">
+          <sc-for list="{{ monthChips }}" as="m" hint-placeholder-count="3">
+            <span style="display:inline-flex;align-items:center;font:600 12.5px 'IBM Plex Sans',sans-serif;color:#241f18;background:#f2ece0;border-radius:6px;padding:4px 9px">{{ m.label }}</span>
+          </sc-for>
+          <span style="font:12px 'IBM Plex Sans',sans-serif;color:#a39a8a;margin-left:2px">▾</span>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font:600 12px 'IBM Plex Sans',sans-serif;color:#726a5c;letter-spacing:0.03em;text-transform:uppercase">Compare</span>
+        <div style="display:flex;background:#e7e0d1;border-radius:8px;padding:3px;gap:2px">
+          <sc-for list="{{ compareModes }}" as="cm" hint-placeholder-count="4">
+            <button onClick="{{ cm.onClick }}" style="{{ cm.style }}">{{ cm.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== OVERVIEW ===================== -->
+    <sc-if value="{{ isOverview }}" hint-placeholder-val="{{ true }}">
+    <div data-screen-label="Overview">
+
+      <!-- KPI tiles -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:28px">
+        <sc-for list="{{ kpiTiles }}" as="k" hint-placeholder-count="3">
+          <div style="background:#fffdf9;border:1px solid rgba(36,31,24,0.1);border-radius:14px;padding:22px 24px;box-shadow:0 2px 10px rgba(36,31,24,0.05)">
+            <div style="font:600 12px 'IBM Plex Sans',sans-serif;color:#8a8071;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:10px">{{ k.label }}</div>
+            <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+              <span style="font:600 34px/1 'Newsreader',serif;color:#241f18">{{ k.value }}</span>
+              <span style="display:inline-flex;align-items:center;gap:4px;font:700 13px 'IBM Plex Sans',sans-serif;color:{{ k.deltaColor }}">{{ k.deltaArrow }} {{ k.deltaLabel }}</span>
+            </div>
+            <div style="font:500 12.5px 'IBM Plex Sans',sans-serif;color:#a39a8a;margin-top:8px">{{ k.sub }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- Trend chart + Discount table -->
+      <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-top:16px;align-items:stretch">
+        <div style="background:#fffdf9;border:1px solid rgba(36,31,24,0.1);border-radius:14px;padding:24px;box-shadow:0 2px 10px rgba(36,31,24,0.05)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+            <span style="font:600 15px 'Newsreader',serif;color:#241f18">Actual Revenue vs AOP Target</span>
+            <div style="display:flex;gap:14px">
+              <span style="display:flex;align-items:center;gap:6px;font:500 12px 'IBM Plex Sans',sans-serif;color:#726a5c"><span style="width:10px;height:10px;border-radius:2px;background:#b8862e;display:inline-block"></span>Actual</span>
+              <span style="display:flex;align-items:center;gap:6px;font:500 12px 'IBM Plex Sans',sans-serif;color:#726a5c"><span style="width:10px;height:10px;border-radius:2px;background:#d8cdb8;display:inline-block"></span>AOP Target</span>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:36px;height:180px;padding:0 12px;border-bottom:1px solid rgba(36,31,24,0.1)">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;flex:1">
+              <div style="display:flex;align-items:flex-end;gap:6px;height:150px">
+                <div style="width:26px;height:127px;background:#b8862e;border-radius:4px 4px 0 0" title="Actual ₹12.1 Cr"></div>
+                <div style="width:26px;height:147px;background:#e7ddc8;border-radius:4px 4px 0 0" title="AOP ₹14.0 Cr"></div>
+              </div>
+              <span style="font:600 12px 'IBM Plex Sans',sans-serif;color:#726a5c">Jun</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;flex:1">
+              <div style="display:flex;align-items:flex-end;gap:6px;height:150px">
+                <div style="width:26px;height:136px;background:#b8862e;border-radius:4px 4px 0 0" title="Actual ₹13.0 Cr"></div>
+                <div style="width:26px;height:149px;background:#e7ddc8;border-radius:4px 4px 0 0" title="AOP ₹14.2 Cr"></div>
+              </div>
+              <span style="font:600 12px 'IBM Plex Sans',sans-serif;color:#726a5c">Jul</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;flex:1">
+              <div style="display:flex;align-items:flex-end;gap:6px;height:150px">
+                <div style="width:26px;height:144px;background:#b8862e;border-radius:4px 4px 0 0" title="Actual ₹13.8 Cr"></div>
+                <div style="width:26px;height:150px;background:#e7ddc8;border-radius:4px 4px 0 0" title="AOP ₹14.3 Cr"></div>
+              </div>
+              <span style="font:600 12px 'IBM Plex Sans',sans-serif;color:#726a5c">Aug</span>
+            </div>
+          </div>
+          <div style="margin-top:12px;font:500 12px 'IBM Plex Sans',sans-serif;color:#a39a8a">3 months of data on file (Jun–Aug 2026) · full trend view builds out monthly</div>
+        </div>
+
+        <div style="background:#fffdf9;border:1px solid rgba(36,31,24,0.1);border-radius:14px;padding:24px;box-shadow:0 2px 10px rgba(36,31,24,0.05);display:flex;flex-direction:column">
+          <span style="font:600 15px 'Newsreader',serif;color:#241f18;margin-bottom:14px">Discount by Territory</span>
+          <div style="display:grid;grid-template-columns:1fr auto auto auto;gap:0 14px;font:600 11px 'IBM Plex Sans',sans-serif;color:#a39a8a;text-transform:uppercase;letter-spacing:0.03em;padding-bottom:10px;border-bottom:1px solid rgba(36,31,24,0.08)">
+            <span>Territory</span><span style="text-align:right">LM</span><span style="text-align:right">CM</span><span style="text-align:right">Δ</span>
+          </div>
+          <sc-for list="{{ discountRows }}" as="d" hint-placeholder-count="5">
+            <div style="display:grid;grid-template-columns:1fr auto auto auto;gap:0 14px;align-items:center;padding:11px 0;border-bottom:1px solid rgba(36,31,24,0.06)">
+              <span style="font:{{ d.nameWeight }} 13.5px 'IBM Plex Sans',sans-serif;color:#241f18">{{ d.name }}</span>
+              <span style="font:500 13px 'IBM Plex Mono',monospace;color:#726a5c;text-align:right">{{ d.lm }}</span>
+              <span style="font:600 13px 'IBM Plex Mono',monospace;color:#241f18;text-align:right">{{ d.cm }}</span>
+              <span style="font:700 12.5px 'IBM Plex Sans',sans-serif;color:{{ d.deltaColor }};text-align:right">{{ d.deltaArrow }}{{ d.deltaLabel }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- Sales Quality contribution -->
+      <div style="background:#fffdf9;border:1px solid rgba(36,31,24,0.1);border-radius:14px;padding:24px;margin-top:16px;box-shadow:0 2px 10px rgba(36,31,24,0.05)">
+        <span style="font:600 15px 'Newsreader',serif;color:#241f18;display:block;margin-bottom:16px">Sales Quality — Contribution to Revenue</span>
+        <div style="display:flex;height:14px;border-radius:7px;overflow:hidden;margin-bottom:18px">
+          <sc-for list="{{ salesQualitySegments }}" as="sq" hint-placeholder-count="6">
+            <div style="{{ sq.barStyle }}" title="{{ sq.name }}"></div>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px">
+          <sc-for list="{{ salesQualitySegments }}" as="sq2" hint-placeholder-count="6">
+            <div style="display:flex;align-items:center;gap:9px">
+              <span style="width:10px;height:10px;border-radius:2px;flex:none;background:{{ sq2.color }}"></span>
+              <div style="min-width:0">
+                <div style="font:600 12.5px 'IBM Plex Sans',sans-serif;color:#241f18;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ sq2.name }}</div>
+                <div style="font:500 12px 'IBM Plex Mono',monospace;color:#8a8071">{{ sq2.value }} · {{ sq2.pct }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- Territory cards -->
+      <div style="margin-top:32px">
+        <span style="font:600 15px 'Newsreader',serif;color:#241f18;display:block;margin-bottom:14px">Territories</span>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+          <sc-for list="{{ territoryCards }}" as="t" hint-placeholder-count="4">
+            <div onClick="{{ t.onClick }}" style="background:#fffdf9;border:1px solid rgba(36,31,24,0.1);border-radius:14px;padding:22px;cursor:pointer;box-shadow:0 2px 10px rgba(36,31,24,0.05);transition:box-shadow .15s" style-hover="box-shadow:0 6px 20px rgba(36,31,24,0.12);border-color:rgba(184,134,46,0.4)">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px">
+                <div>
+                  <div style="font:700 15px 'IBM Plex Sans',sans-serif;color:#241f18">{{ t.manager }}</div>
+                  <div style="font:500 12.5px 'IBM Plex Sans',sans-serif;color:#8a8071;margin-top:2px">{{ t.territory }}</div>
+                </div>
+                <span style="display:inline-flex;align-items:center;justify-content:center;min-width:32px;height:24px;padding:0 8px;border-radius:6px;font:700 13px 'IBM Plex Sans',sans-serif;background:{{ t.gradeBg }};color:{{ t.gradeColor }}">{{ t.grade }}</span>
+              </div>
+              <div style="display:flex;align-items:baseline;gap:8px">
+                <span style="font:600 26px 'Newsreader',serif;color:#241f18">{{ t.aopPct }}</span>
+                <span style="font:500 12px 'IBM Plex Sans',sans-serif;color:#a39a8a">of AOP</span>
+              </div>
+              <div style="height:6px;background:#eee6d4;border-radius:3px;margin:10px 0 14px;overflow:hidden">
+                <div style="height:100%;border-radius:3px;background:{{ t.gradeColor }};width:{{ t.barWidth }}"></div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <span style="font:600 15px 'IBM Plex Mono',monospace;color:#241f18">{{ t.revenue }}</span>
+                <span style="display:inline-flex;align-items:center;gap:4px;font:700 12.5px 'IBM Plex Sans',sans-serif;color:{{ t.deltaColor }}">{{ t.deltaArrow }} {{ t.deltaLabel }}</span>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ===================== TERRITORY DETAIL ===================== -->
+    <sc-if value="{{ isDetail }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Territory Detail">
+
+      <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:26px;margin-bottom:6px">
+        <div>
+          <span style="font:600 26px 'Newsreader',serif;color:#241f18">{{ cur.manager }}</span>
+          <span style="font:500 15px 'IBM Plex Sans',sans-serif;color:#8a8071;margin-left:10px">{{ cur.territory }}</span>
+        </div>
+        <span style="font:600 12px 'IBM Plex Sans',sans-serif;color:#a39a8a;letter-spacing:0.03em;text-transform:uppercase">Sub-regions: {{ cur.subRegionsLabel }}</span>
+      </div>
+
+      <!-- 1. Business Planning & Control -->
+      <div style="background:#fffdf9;border:1px solid rgba(36,31,24,0.1);border-radius:14px;padding:24px;margin-top:20px;box-shadow:0 2px 10px rgba(36,31,24,0.05)">
+        <span style="font:600 15px 'Newsreader',serif;color:#241f18;display:block;margin-bottom:16px">1 · Business Planning &amp; Control</span>
+        <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr 0.7fr;gap:0 12px;font:600 11px 'IBM Plex Sans',sans-serif;color:#a39a8a;text-transform:uppercase;letter-spacing:0.03em;padding-bottom:10px;border-bottom:1px solid rgba(36,31,24,0.08)">
+          <span>Sub-region</span><span style="text-align:right">AOP Target</span><span style="text-align:right">Confirmed</span><span style="text-align:right">Actual</span><span style="text-align:right">Achv %</span><span style="text-align:right">Grade</span>
+        </div>
+        <sc-for list="{{ cur.businessPlanning }}" as="bp" hint-placeholder-count="3">
+          <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr 0.7fr;gap:0 12px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(36,31,24,0.06)">
+            <span style="font:{{ bp.nameWeight }} 13.5px 'IBM Plex Sans',sans-serif;color:#241f18">{{ bp.name }}</span>
+            <span style="font:500 13px 'IBM Plex Mono',monospace;color:#726a5c;text-align:right">{{ bp.aop }}</span>
+            <span style="font:500 13px 'IBM Plex Mono',monospace;color:#726a5c;text-align:right">{{ bp.confirmed }}</span>
+            <span style="font:600 13px 'IBM Plex Mono',monospace;color:#241f18;text-align:right">{{ bp.actual }}</span>
+            <span style="font:600 13px 'IBM Plex Mono',monospace;color:#241f18;text-align:right">{{ bp.ach }}</span>
+            <span style="text-align:right"><span style="display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:22px;padding:0 6px;border-radius:5px;font:700 12px 'IBM Plex Sans',sans-serif;background:{{ bp.gradeBg }};color:{{ bp.gradeColor }}">{{ bp.grade }}</span></span>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- 2. A/c Bucket -->
+      <div style="background:#fffdf9;border:1px solid rgba(36,31,24,0.1);border-radius:14px;padding:24px;margin-top:16px;box-shadow:0 2px 10px rgba(36,31,24,0.05)">
+        <span style="font:600 15px 'Newsreader',serif;color:#241f18;display:block;margin-bottom:16px">2 · A/c Bucket — Key+Growth vs Rotating</span>
+        <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:28px;align-items:center">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ cur.acBucket }}" as="ac" hint-placeholder-count="2">
+              <div>
+                <div style="display:flex;justify-content:space-between;font:600 12.5px 'IBM Plex Sans',sans-serif;color:#726a5c;margin-bottom:6px">
+                  <span>{{ ac.name }}</span>
+                </div>
+                <div style="display:flex;height:22px;border-radius:5px;overflow:hidden">
+                  <div style="background:#b8862e;display:flex;align-items:center;justify-content:center;color:#fffdf9;font:700 11px 'IBM Plex Sans',sans-serif;width:{{ ac.keyPct }}">{{ ac.keyPctLabel }}</div>
+                  <div style="background:#e0d5bd;display:flex;align-items:center;justify-content:center;color:#726a5c;font:700 11px 'IBM Plex Sans',sans-serif;width:{{ ac.rotPct }}">{{ ac.rotPctLabel }}</div>
+                </div>
+              </div>
+            </sc-for>
+            <div style="display:flex;gap:14px;margin-top:4px">
+              <span style="display:flex;align-items:center;gap:6px;font:500 12px 'IBM Plex Sans',sans-serif;color:#726a5c"><span style="width:10px;height:10px;border-radius:2px;background:#b8862e;display:inline-block"></span>Key+Growth</span>
+              <span style="display:flex;align-items:center;gap:6px;font:500 12px 'IBM Plex Sans',sans-serif;color:#726a5c"><span style="width:10px;height:10px;border-radius:2px;background:#e0d5bd;display:inline-block"></span>Rotating</span>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:0 12px;font:500 13px 'IBM Plex Sans',sans-serif">
+            <div style="font:600 11px 'IBM Plex Sans',sans-serif;color:#a39a8a;text-transform:uppercase;letter-spacing:0.03em;padding-bottom:8px;border-bottom:1px solid rgba(36,31,24,0.08)">Sub-region</div>
+            <div style="font:600 11px 'IBM Plex Sans',sans-serif;color:#a39a8a;text-transform:uppercase;letter-spacing:0.03em;text-align:right;padding-bottom:8px;border-bottom:1px solid rgba(36,31,24,0.08)">Key+Growth</div>
+            <div style="font:600 11px 'IBM Plex Sans',sans-serif;color:#a39a8a;text-transform:uppercase;letter-spacing:0.03em;text-align:right;padding-bottom:8px;border-bottom:1px solid rgba(36,31,24,0.08)">Rotating</div>
+            <sc-for list="{{ cur.acBucket }}" as="ac2" hint-placeholder-count="2">
+              <span style="display:contents">
+                <span style="padding:10px 0;color:#241f18">{{ ac2.name }}</span>
+                <span style="padding:10px 0;text-align:right;font:600 13px 'IBM Plex Mono',monospace;color:#241f18">{{ ac2.keyVal }}</span>
+                <span style="padding:10px 0;text-align:right;font:500 13px 'IBM Plex Mono',monospace;color:#726a5c">{{ ac2.rotVal }}</span>
+              </span>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Price Control / Discount -->
+      <div style="background:#fffdf9;border:1px solid rgba(36,31,24,0.1);border-radius:14px;padding:24px;margin-top:16px;box-shadow:0 2px 10px rgba(36,31,24,0.05)">
+        <span style="font:600 15px 'Newsreader',serif;color:#241f18;display:block;margin-bottom:16px">3 · Price Control / Discount</span>
+        <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr 1.4fr;gap:0 12px;font:600 11px 'IBM Plex Sans',sans-serif;color:#a39a8a;text-transform:uppercase;letter-spacing:0.03em;padding-bottom:10px;border-bottom:1px solid rgba(36,31,24,0.08)">
+          <span>Channel</span><span style="text-align:right">LY</span><span style="text-align:right">CM</span><span style="text-align:right">Δ</span><span style="padding-left:16px">LY vs CM</span>
+        </div>
+        <sc-for list="{{ cur.discountChannels }}" as="dc" hint-placeholder-count="4">
+          <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr 1.4fr;gap:0 12px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(36,31,24,0.06)">
+            <span style="font:600 13.5px 'IBM Plex Sans',sans-serif;color:#241f18">{{ dc.name }}</span>
+            <span style="font:500 13px 'IBM Plex Mono',monospace;color:#726a5c;text-align:right">{{ dc.ly }}</span>
+            <span style="font:600 13px 'IBM Plex Mono',monospace;color:#241f18;text-align:right">{{ dc.cm }}</span>
+            <span style="font:700 12.5px 'IBM Plex Sans',sans-serif;color:{{ dc.deltaColor }};text-align:right">{{ dc.deltaArrow }}{{ dc.deltaLabel }}</span>
+            <div style="display:flex;align-items:center;gap:6px;padding-left:16px">
+              <div style="height:8px;border-radius:4px;background:#e0d5bd;width:{{ dc.lyBar }}"></div>
+              <div style="height:8px;border-radius:4px;background:#b8862e;width:{{ dc.cmBar }}"></div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- 4. Sales Quality -->
+      <div style="background:#fffdf9;border:1px solid rgba(36,31,24,0.1);border-radius:14px;padding:24px;margin-top:16px;box-shadow:0 2px 10px rgba(36,31,24,0.05)">
+        <span style="font:600 15px 'Newsreader',serif;color:#241f18;display:block;margin-bottom:16px">4 · Sales Quality</span>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">
+          <sc-for list="{{ cur.salesQuality }}" as="sq" hint-placeholder-count="6">
+            <div style="border:1px solid rgba(36,31,24,0.08);border-radius:10px;padding:16px">
+              <div style="font:700 13px 'IBM Plex Sans',sans-serif;color:#241f18;margin-bottom:12px">{{ sq.name }}</div>
+              <div style="display:flex;justify-content:space-between;font:500 11.5px 'IBM Plex Sans',sans-serif;color:#a39a8a;margin-bottom:4px"><span>LY</span><span>LM</span><span>CM</span></div>
+              <div style="display:flex;justify-content:space-between;font:600 13.5px 'IBM Plex Mono',monospace;color:#241f18"><span>{{ sq.ly }}</span><span>{{ sq.lm }}</span><span style="color:#8a5a1e">{{ sq.cm }}</span></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- 5. Productivity per Head -->
+      <div style="background:#fffdf9;border:1px solid rgba(36,31,24,0.1);border-radius:14px;padding:24px;margin-top:16px;box-shadow:0 2px 10px rgba(36,31,24,0.05)">
+        <span style="font:600 15px 'Newsreader',serif;color:#241f18;display:block;margin-bottom:16px">5 · Productivity per Head</span>
+        <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr 1.6fr;gap:0 12px;font:600 11px 'IBM Plex Sans',sans-serif;color:#a39a8a;text-transform:uppercase;letter-spacing:0.03em;padding-bottom:10px;border-bottom:1px solid rgba(36,31,24,0.08)">
+          <span>Sub-region</span><span style="text-align:right">Actual</span><span style="text-align:right">Target</span><span style="text-align:right">Nat'l Bmk</span><span style="padding-left:16px">vs Target / Bmk</span>
+        </div>
+        <sc-for list="{{ cur.productivity }}" as="p" hint-placeholder-count="3">
+          <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr 1.6fr;gap:0 12px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(36,31,24,0.06)">
+            <span style="font:{{ p.nameWeight }} 13.5px 'IBM Plex Sans',sans-serif;color:#241f18">{{ p.name }}</span>
+            <span style="font:600 13px 'IBM Plex Mono',monospace;color:#241f18;text-align:right">{{ p.actual }}</span>
+            <span style="font:500 13px 'IBM Plex Mono',monospace;color:#726a5c;text-align:right">{{ p.target }}</span>
+            <span style="font:500 13px 'IBM Plex Mono',monospace;color:#726a5c;text-align:right">{{ p.benchmark }}</span>
+            <div style="position:relative;height:10px;background:#eee6d4;border-radius:5px;padding-left:16px">
+              <div style="height:10px;border-radius:5px;background:{{ p.barColor }};width:{{ p.barPct }}"></div>
+              <div style="position:absolute;top:-3px;bottom:-3px;width:2px;background:#241f18;left:{{ p.targetMark }}"></div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- 6+7. Financial Control & Billing Challenges -->
+      <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:16px;margin-top:16px">
+        <div style="background:#fffdf9;border:1px solid rgba(36,31,24,0.1);border-radius:14px;padding:24px;box-shadow:0 2px 10px rgba(36,31,24,0.05)">
+          <span style="font:600 15px 'Newsreader',serif;color:#241f18;display:block;margin-bottom:18px">6 · Financial Control</span>
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div>
+              <div style="font:600 11.5px 'IBM Plex Sans',sans-serif;color:#a39a8a;text-transform:uppercase;letter-spacing:0.03em">YTD Income Billed</div>
+              <div style="font:600 24px 'Newsreader',serif;color:#241f18;margin-top:4px">{{ cur.financial.ytdBilled }}</div>
+            </div>
+            <div>
+              <div style="font:600 11.5px 'IBM Plex Sans',sans-serif;color:#a39a8a;text-transform:uppercase;letter-spacing:0.03em">Outstanding</div>
+              <div style="font:600 24px 'Newsreader',serif;color:#241f18;margin-top:4px">{{ cur.financial.outstanding }}</div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline">
+                <div style="font:600 11.5px 'IBM Plex Sans',sans-serif;color:#a39a8a;text-transform:uppercase;letter-spacing:0.03em">Collection %</div>
+                <div style="font:700 15px 'IBM Plex Mono',monospace;color:{{ cur.financial.collectionColor }}">{{ cur.financial.collectionPct }}</div>
+              </div>
+              <div style="height:8px;background:#eee6d4;border-radius:4px;margin-top:8px;overflow:hidden">
+                <div style="height:100%;border-radius:4px;background:{{ cur.financial.collectionColor }};width:{{ cur.financial.collectionPct }}"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#fffdf9;border:1px solid rgba(36,31,24,0.1);border-radius:14px;padding:24px;box-shadow:0 2px 10px rgba(36,31,24,0.05)">
+          <span style="font:600 15px 'Newsreader',serif;color:#241f18;display:block;margin-bottom:18px">7 · Billing Challenges</span>
+          <div style="display:flex;align-items:flex-end;gap:28px;height:140px;padding:0 8px;border-bottom:1px solid rgba(36,31,24,0.1)">
+            <sc-for list="{{ cur.billingChallenges }}" as="bc" hint-placeholder-count="3">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:8px;flex:1">
+                <div style="display:flex;align-items:flex-end;gap:10px;height:110px">
+                  <div style="width:28px;background:#b8862e;border-radius:4px 4px 0 0;height:{{ bc.billedBar }}" title="{{ bc.billed }}"></div>
+                  <div style="width:6px;background:{{ bc.challengeColor }};border-radius:3px;height:{{ bc.challengeBar }}" title="{{ bc.challengePct }}"></div>
+                </div>
+                <span style="font:600 12px 'IBM Plex Sans',sans-serif;color:#726a5c">{{ bc.month }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:16px;margin-top:12px">
+            <span style="display:flex;align-items:center;gap:6px;font:500 12px 'IBM Plex Sans',sans-serif;color:#726a5c"><span style="width:10px;height:10px;border-radius:2px;background:#b8862e;display:inline-block"></span>Income Billed</span>
+            <span style="display:flex;align-items:center;gap:6px;font:500 12px 'IBM Plex Sans',sans-serif;color:#726a5c"><span style="width:6px;height:10px;border-radius:2px;background:#a3312a;display:inline-block"></span>Billing Challenges %</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    </sc-if>
+
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+function fmtCr(v){ return v==null ? '—' : '\u20B9' + v.toFixed(1) + ' Cr'; }
+function fmtPct(v,d){ d=d==null?1:d; return v==null ? '—' : v.toFixed(d) + '%'; }
+const GRADE_COLORS = {
+  'A+': {bg:'rgba(47,107,70,0.13)', fg:'#2f6b46'},
+  'A':  {bg:'rgba(47,107,70,0.13)', fg:'#2f6b46'},
+  'B':  {bg:'rgba(184,134,46,0.16)', fg:'#8a5a1e'},
+  'C':  {bg:'rgba(163,49,42,0.13)', fg:'#a3312a'}
+};
+function grade(g){ const c = GRADE_COLORS[g] || GRADE_COLORS['B']; return {grade:g, gradeBg:c.bg, gradeColor:c.fg}; }
+function delta(value, goodDir, unit){
+  unit = unit || '%';
+  const dir = value >= 0 ? 'up' : 'down';
+  const good = goodDir === 'down' ? value <= 0 : value >= 0;
+  return {
+    deltaArrow: dir === 'up' ? '\u25B2' : '\u25BC',
+    deltaLabel: Math.abs(value).toFixed(1) + unit,
+    deltaColor: good ? '#2f6b46' : '#a3312a'
+  };
+}
+
+const TERRITORIES = {
+  gaurav: {
+    manager:'Gaurav', territory:'Delhi + East', subRegionsLabel:'Delhi, East',
+    aopPct: 96.4, gradeKey:'A', revenue: 13.6, revenueDelta: 5.1,
+    businessPlanning: [
+      {name:'Delhi', aop:8.0, confirmed:7.6, actual:7.7, ach:96.3, gradeKey:'A', bold:false},
+      {name:'East', aop:5.5, confirmed:5.2, actual:5.4, ach:98.2, gradeKey:'A', bold:false},
+      {name:'Combined Total', aop:13.5, confirmed:12.8, actual:13.1, ach:97.0, gradeKey:'A', bold:true}
+    ],
+    acBucket: [ {name:'Delhi', key:5.8, rot:1.9}, {name:'East', key:3.9, rot:1.5} ],
+    discountChannels: [
+      {name:'On-Screen', ly:19.0, cm:17.2},
+      {name:'On-Ground', ly:15.5, cm:null},
+      {name:'Digital', ly:22.0, cm:20.8},
+      {name:'Hospitality', ly:12.0, cm:13.4}
+    ],
+    salesQuality: [
+      {name:'Off Screen', ly:2.1, lm:2.4, cm:2.6},
+      {name:'Innovations', ly:1.5, lm:null, cm:1.9},
+      {name:'Format Sponsorships', ly:2.8, lm:3.0, cm:3.1},
+      {name:'IP Sales Deals', ly:1.2, lm:1.3, cm:null},
+      {name:'Zeouk Box Deal', ly:0.9, lm:1.0, cm:1.1},
+      {name:'Brandscap Deal', ly:1.4, lm:1.5, cm:1.6}
+    ],
+    productivity: [
+      {name:'Delhi', actual:1.28, target:1.35, benchmark:1.30, bold:false},
+      {name:'East', actual:1.15, target:1.10, benchmark:1.30, bold:false},
+      {name:'Combined Total', actual:1.23, target:1.25, benchmark:1.30, bold:true}
+    ],
+    financial: {ytdBilled:24.6, outstanding:3.2, collectionPct:87.0},
+    billingChallenges: [ {month:'Jun', billed:7.8, challengePct:6.2}, {month:'Jul', billed:8.1, challengePct:5.5}, {month:'Aug', billed:8.7, challengePct:4.1} ]
+  },
+  rajesh: {
+    manager:'Rajesh', territory:'North + West', subRegionsLabel:'West + North',
+    aopPct: 82.1, gradeKey:'B', revenue: 9.8, revenueDelta: -2.3,
+    businessPlanning: [ {name:'West + North', aop:11.0, confirmed:9.0, actual:9.03, ach:82.1, gradeKey:'B', bold:true} ],
+    acBucket: [ {name:'West + North', key:6.5, rot:2.5} ],
+    discountChannels: [
+      {name:'On-Screen', ly:16.0, cm:17.5}, {name:'On-Ground', ly:14.0, cm:null},
+      {name:'Digital', ly:18.0, cm:19.0}, {name:'Hospitality', ly:10.0, cm:9.5}
+    ],
+    salesQuality: [
+      {name:'Off Screen', ly:1.8, lm:1.6, cm:1.5}, {name:'Innovations', ly:1.0, lm:1.1, cm:null},
+      {name:'Format Sponsorships', ly:2.0, lm:1.9, cm:1.8}, {name:'IP Sales Deals', ly:0.9, lm:0.8, cm:0.7},
+      {name:'Zeouk Box Deal', ly:0.6, lm:0.6, cm:0.5}, {name:'Brandscap Deal', ly:1.1, lm:1.0, cm:0.9}
+    ],
+    productivity: [ {name:'West + North', actual:1.05, target:1.20, benchmark:1.30, bold:true} ],
+    financial: {ytdBilled:17.2, outstanding:4.8, collectionPct:72.0},
+    billingChallenges: [ {month:'Jun', billed:5.5, challengePct:7.0}, {month:'Jul', billed:5.8, challengePct:8.2}, {month:'Aug', billed:5.6, challengePct:9.0} ]
+  },
+  shalini: {
+    manager:'Shalini', territory:'KA + KL', subRegionsLabel:'KA+KL',
+    aopPct: 101.2, gradeKey:'A+', revenue: 8.9, revenueDelta: 7.8,
+    businessPlanning: [ {name:'KA+KL', aop:8.8, confirmed:8.9, actual:8.9, ach:101.2, gradeKey:'A+', bold:true} ],
+    acBucket: [ {name:'KA+KL', key:7.0, rot:1.9} ],
+    discountChannels: [
+      {name:'On-Screen', ly:12.0, cm:11.2}, {name:'On-Ground', ly:11.0, cm:10.5},
+      {name:'Digital', ly:13.5, cm:12.9}, {name:'Hospitality', ly:9.0, cm:8.8}
+    ],
+    salesQuality: [
+      {name:'Off Screen', ly:1.6, lm:1.7, cm:1.9}, {name:'Innovations', ly:1.2, lm:1.3, cm:1.4},
+      {name:'Format Sponsorships', ly:2.2, lm:2.3, cm:2.5}, {name:'IP Sales Deals', ly:1.0, lm:1.1, cm:1.2},
+      {name:'Zeouk Box Deal', ly:0.7, lm:0.8, cm:0.9}, {name:'Brandscap Deal', ly:1.3, lm:1.4, cm:1.5}
+    ],
+    productivity: [ {name:'KA+KL', actual:1.42, target:1.35, benchmark:1.30, bold:true} ],
+    financial: {ytdBilled:15.9, outstanding:1.4, collectionPct:94.0},
+    billingChallenges: [ {month:'Jun', billed:5.1, challengePct:3.8}, {month:'Jul', billed:5.3, challengePct:3.5}, {month:'Aug', billed:5.6, challengePct:3.0} ]
+  },
+  sharda: {
+    manager:'Sharda', territory:'West - Mumbai', subRegionsLabel:'West (Mum)',
+    aopPct: 88.7, gradeKey:'B', revenue: 6.6, revenueDelta: 1.2,
+    businessPlanning: [ {name:'West (Mum)', aop:7.4, confirmed:6.6, actual:6.6, ach:88.7, gradeKey:'B', bold:true} ],
+    acBucket: [ {name:'West (Mum)', key:4.6, rot:2.0} ],
+    discountChannels: [
+      {name:'On-Screen', ly:21.0, cm:19.4}, {name:'On-Ground', ly:18.5, cm:null},
+      {name:'Digital', ly:23.0, cm:22.1}, {name:'Hospitality', ly:15.0, cm:16.2}
+    ],
+    salesQuality: [
+      {name:'Off Screen', ly:0.8, lm:0.9, cm:1.0}, {name:'Innovations', ly:0.4, lm:0.5, cm:0.5},
+      {name:'Format Sponsorships', ly:1.3, lm:1.4, cm:1.5}, {name:'IP Sales Deals', ly:0.5, lm:null, cm:0.6},
+      {name:'Zeouk Box Deal', ly:0.4, lm:0.4, cm:0.4}, {name:'Brandscap Deal', ly:0.6, lm:0.7, cm:0.7}
+    ],
+    productivity: [ {name:'West (Mum)', actual:1.02, target:1.10, benchmark:1.30, bold:true} ],
+    financial: {ytdBilled:12.1, outstanding:2.6, collectionPct:81.0},
+    billingChallenges: [ {month:'Jun', billed:3.9, challengePct:6.0}, {month:'Jul', billed:4.0, challengePct:6.8}, {month:'Aug', billed:4.1, challengePct:6.1} ]
+  }
+};
+
+const SALES_QUALITY_COMBINED = [
+  {name:'Off Screen', value:8.2, pct:21, color:'#b8862e'},
+  {name:'Innovations', value:6.1, pct:16, color:'#c9975f'},
+  {name:'Format Sponsorships', value:9.4, pct:24, color:'#8a5a1e'},
+  {name:'IP Sales Deals', value:5.0, pct:13, color:'#d6b370'},
+  {name:'Zeouk Box Deal', value:4.4, pct:11, color:'#a3312a'},
+  {name:'Brandscap Deal', value:5.8, pct:15, color:'#c96b4a'}
+];
+
+const DISCOUNT_OVERVIEW = [
+  {name:'Gaurav', lm:18.2, cm:16.5, bold:false},
+  {name:'Rajesh', lm:14.0, cm:15.8, bold:false},
+  {name:'Shalini', lm:12.5, cm:11.9, bold:false},
+  {name:'Sharda', lm:20.1, cm:19.4, bold:false},
+  {name:'Combined', lm:16.2, cm:15.9, bold:true}
+];
+
+class Component extends DCLogic {
+  state = { view: 'overview', activeManager: 'all', activeDetail: 'gaurav', compareMode: 'None' };
+
+  pillStyle(active){
+    return active
+      ? 'font:700 13px \'IBM Plex Sans\',sans-serif;color:#fffdf9;background:#241f18;border:1px solid #241f18;border-radius:20px;padding:8px 18px;cursor:pointer'
+      : 'font:600 13px \'IBM Plex Sans\',sans-serif;color:#4a4238;background:transparent;border:1px solid rgba(36,31,24,0.16);border-radius:20px;padding:8px 18px;cursor:pointer';
+  }
+
+  goOverview(){ this.setState({view:'overview', activeManager:'all'}); }
+  goDetail(key){ this.setState({view:'detail', activeManager:key, activeDetail:key}); }
+
+  renderVals(){
+    const st = this.state;
+    const navKeys = ['all','gaurav','rajesh','shalini','sharda'];
+    const navLabels = {all:'All', gaurav:'Gaurav', rajesh:'Rajesh', shalini:'Shalini', sharda:'Sharda'};
+    const navItems = navKeys.map(k => ({
+      label: navLabels[k],
+      pillStyle: this.pillStyle(st.activeManager === k),
+      onClick: k === 'all' ? () => this.goOverview() : () => this.goDetail(k)
+    }));
+
+    const compareKeys = ['None','MoM','QoQ','YoY'];
+    const compareModes = compareKeys.map(c => ({
+      label: c,
+      style: (st.compareMode === c
+        ? 'font:700 12px \'IBM Plex Sans\',sans-serif;color:#241f18;background:#fffdf9;border-radius:6px;padding:6px 14px;cursor:pointer;box-shadow:0 1px 3px rgba(36,31,24,0.15)'
+        : 'font:600 12px \'IBM Plex Sans\',sans-serif;color:#8a8071;background:transparent;border-radius:6px;padding:6px 14px;cursor:pointer'),
+      onClick: () => this.setState({compareMode: c})
+    }));
+
+    const monthChips = [{label:'Jun 2026'},{label:'Jul 2026'},{label:'Aug 2026'}];
+
+    const kpiTiles = [
+      Object.assign({label:'Combined AOP Target', value:'\u20B942.5 Cr', sub:'across 4 territories · Jun–Aug 2026'}, delta(4.2,'up')),
+      Object.assign({label:'Actual Revenue', value:'\u20B938.9 Cr', sub:'91.5% of combined AOP target'}, delta(6.8,'up')),
+      Object.assign({label:'Achievement %', value:'91.5%', sub:'vs 87.9% last month'}, delta(3.6,'up'))
+    ];
+
+    const discountRows = DISCOUNT_OVERVIEW.map(r => Object.assign({
+      name: r.name, nameWeight: r.bold ? 700 : 600,
+      lm: fmtPct(r.lm), cm: fmtPct(r.cm)
+    }, delta(r.cm - r.lm, 'down', 'pp')));
+
+    const salesQualitySegments = SALES_QUALITY_COMBINED.map(s => ({
+      name: s.name, color: s.color, value: fmtCr(s.value), pct: s.pct + '%',
+      barStyle: 'background:' + s.color + ';width:' + s.pct + '%'
+    }));
+
+    const territoryCards = Object.keys(TERRITORIES).map(key => {
+      const t = TERRITORIES[key];
+      const g = grade(t.gradeKey);
+      return Object.assign({
+        manager: t.manager, territory: t.territory,
+        aopPct: fmtPct(t.aopPct), revenue: fmtCr(t.revenue),
+        barWidth: Math.min(100, t.aopPct) + '%',
+        onClick: () => this.goDetail(key)
+      }, g, delta(t.revenueDelta, 'up'));
+    });
+
+    const cur = (() => {
+      const t = TERRITORIES[st.activeDetail];
+      const g = grade(t.gradeKey);
+      return {
+        manager: t.manager, territory: t.territory, subRegionsLabel: t.subRegionsLabel,
+        businessPlanning: t.businessPlanning.map(r => Object.assign({
+          name: r.name, nameWeight: r.bold ? 700 : 600,
+          aop: fmtCr(r.aop), confirmed: fmtCr(r.confirmed), actual: fmtCr(r.actual), ach: fmtPct(r.ach)
+        }, grade(r.gradeKey))),
+        acBucket: t.acBucket.map(r => {
+          const total = r.key + r.rot;
+          const keyPct = Math.round(r.key/total*100), rotPct = 100-keyPct;
+          return { name: r.name, keyVal: fmtCr(r.key), rotVal: fmtCr(r.rot),
+            keyPct: keyPct+'%', rotPct: rotPct+'%', keyPctLabel: keyPct+'%', rotPctLabel: rotPct+'%' };
+        }),
+        discountChannels: t.discountChannels.map(r => Object.assign({
+          name: r.name, ly: fmtPct(r.ly), cm: fmtPct(r.cm),
+          lyBar: Math.min(100, r.ly*2.2) + '%', cmBar: r.cm==null ? '0%' : Math.min(100, r.cm*2.2) + '%'
+        }, delta((r.cm==null?0:r.cm) - r.ly, 'down', 'pp'))),
+        salesQuality: t.salesQuality.map(r => ({ name: r.name, ly: fmtCr(r.ly), lm: fmtCr(r.lm), cm: fmtCr(r.cm) })),
+        productivity: t.productivity.map(r => {
+          const pct = Math.min(100, r.actual / r.benchmark * 100);
+          return { name: r.name, nameWeight: r.bold?700:600,
+            actual: fmtCr(r.actual)+'/hd', target: fmtCr(r.target)+'/hd', benchmark: fmtCr(r.benchmark)+'/hd',
+            barPct: pct.toFixed(0)+'%', barColor: r.actual>=r.target ? '#2f6b46' : '#b8862e',
+            targetMark: Math.min(100, r.target / r.benchmark * 100).toFixed(0)+'%' };
+        }),
+        financial: {
+          ytdBilled: fmtCr(t.financial.ytdBilled), outstanding: fmtCr(t.financial.outstanding),
+          collectionPct: fmtPct(t.financial.collectionPct,0),
+          collectionColor: t.financial.collectionPct >= 85 ? '#2f6b46' : (t.financial.collectionPct >= 75 ? '#b8862e' : '#a3312a')
+        },
+        billingChallenges: t.billingChallenges.map(r => Object.assign({
+          month: r.month, billed: fmtCr(r.billed), challengePct: fmtPct(r.challengePct),
+          billedBar: Math.min(100, r.billed*10)+'%', challengeBar: Math.min(100, r.challengePct*10)+'%',
+          challengeColor: r.challengePct <= 5 ? '#2f6b46' : (r.challengePct <= 7 ? '#b8862e' : '#a3312a')
+        }))
+      };
+    })();
+
+    return {
+      isOverview: st.view === 'overview', isDetail: st.view === 'detail',
+      navItems, compareModes, monthChips, kpiTiles, discountRows, salesQualitySegments, territoryCards, cur
+    };
+  }
+}
+
+</script>
+</body>
+</html>

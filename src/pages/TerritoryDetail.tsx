@@ -37,20 +37,27 @@ export default function TerritoryDetail() {
       <FilterBar />
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-6">
-          <Link to="/" className="text-sm font-medium text-slate-500 hover:text-slate-700">
+          <Link to="/" className="text-sm font-medium text-muted hover:text-charcoal">
             ← Overview
           </Link>
-          <div className="mt-2 flex items-baseline gap-3">
-            <h1 className="text-xl font-bold text-charcoal">{manager}</h1>
-            <span className="text-sm text-slate-500">{territoryLabel}</span>
+          <div className="mt-2 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+            <div>
+              <span className="font-serif text-2xl font-semibold text-charcoal">{manager}</span>
+              <span className="ml-2.5 text-sm font-medium text-muted">{territoryLabel}</span>
+            </div>
+            {territories[0] && (
+              <span className="text-xs font-semibold uppercase tracking-wide text-muted-2">
+                Sub-regions: {territories[territories.length - 1]?.subRegions.map((sr) => sr.regionName).join(", ")}
+              </span>
+            )}
           </div>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-muted">
             {selectedMonths.length > 1 ? `As of ${monthLabel}` : monthLabel}
           </p>
         </div>
 
         {territories.length === 0 ? (
-          <p className="text-sm text-slate-500">No data available for {manager} in this period.</p>
+          <p className="text-sm text-muted">No data available for {manager} in this period.</p>
         ) : (
           <div className="flex flex-col gap-5">
             <BusinessPlanningSection territories={territories} comparisonMode={comparisonMode} />

@@ -21,10 +21,17 @@ function weightedAverage(pairs: Array<{ value: number | null; weight: number | n
 
 const GRADE_ORDER: Record<string, number> = { "A+": 4, A: 3, B: 2, C: 1 };
 
-function worstRanking(rankings: Array<string | null | undefined>): string | null {
+/** Worst of a list of grades (A+/A/B/C don't average -- flag the worst one). */
+export function worstRanking(rankings: Array<string | null | undefined>): string | null {
   const valid = rankings.filter((r): r is string => !!r && r in GRADE_ORDER);
   if (valid.length === 0) return null;
   return valid.reduce((worst, r) => (GRADE_ORDER[r] < GRADE_ORDER[worst] ? r : worst));
+}
+
+/** Worst planning grade across a territory's sub-regions -- used for a single
+ * territory-level grade badge (e.g. the Overview territory card). */
+export function territoryPlanningGrade(t: Territory): string | null {
+  return worstRanking(t.subRegions.map((sr) => sr.businessPlanning?.planningGrade));
 }
 
 function sumField(t: Territory, selector: (bp: BusinessPlanning) => number | null): number | null {

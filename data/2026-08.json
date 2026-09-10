@@ -1,0 +1,854 @@
+{
+  "month": "2026-08",
+  "territories": [
+    {
+      "manager": "Gaurav",
+      "territoryLabel": "Delhi + East",
+      "month": "2026-08",
+      "subRegions": [
+        {
+          "regionName": "Delhi",
+          "businessPlanning": {
+            "region": "Delhi",
+            "aopTarget": 9.397063798,
+            "businessConfirmed": 7.08,
+            "actualRevenue": 6.769634487000008,
+            "actualPctOfTarget": 0.720398906777754,
+            "monthBeginningPct": 0.9561630631355944,
+            "planningGrade": "C",
+            "controlGrade": "A"
+          },
+          "acBucket": {
+            "region": "Delhi",
+            "keyGrowth": {
+              "division": "Top 15 A/Cs",
+              "targetIndex": 0.7,
+              "pctContributionOfAop": 0.8141240797759741,
+              "ranking": "B",
+              "topAccountsValue": 5.355263142000009,
+              "achievement": null
+            },
+            "rotating": {
+              "division": "Rest",
+              "targetIndex": 0.3,
+              "pctContributionOfAop": 0.5017068364485738,
+              "ranking": "C",
+              "topAccountsValue": 1.414371345,
+              "achievement": null
+            }
+          },
+          "priceControl": {
+            "region": "Delhi",
+            "channels": [
+              {
+                "channel": "Other Agency",
+                "lyAvgDiscount": 0.9164352590620025,
+                "lyClientCount": 8,
+                "lyContributionPct": 0.3714270353923919,
+                "cmAvgDiscount": 0.691352305040011,
+                "cmClientCount": 13,
+                "cmContributionPct": 0.3285937356398965
+              },
+              {
+                "channel": "Direct",
+                "lyAvgDiscount": 0.8003367663074613,
+                "lyClientCount": 13,
+                "lyContributionPct": 0.14869504182850385,
+                "cmAvgDiscount": 0.6629049221915149,
+                "cmClientCount": 9,
+                "cmContributionPct": 0.31425552222728115
+              },
+              {
+                "channel": "ITV",
+                "lyAvgDiscount": 0.7132481552302516,
+                "lyClientCount": 8,
+                "lyContributionPct": 0.272457327941323,
+                "cmAvgDiscount": 0.6891552941710277,
+                "cmClientCount": 7,
+                "cmContributionPct": 0.21067400754631008
+              },
+              {
+                "channel": "Khushi",
+                "lyAvgDiscount": 0.7181936069745842,
+                "lyClientCount": 15,
+                "lyContributionPct": 0.16310740330749762,
+                "cmAvgDiscount": 0.747314103078246,
+                "cmClientCount": 9,
+                "cmContributionPct": 0.12172078250049832
+              },
+              {
+                "channel": "Prachar",
+                "lyAvgDiscount": 0.8992585409890167,
+                "lyClientCount": 2,
+                "lyContributionPct": 0.044313191530283604,
+                "cmAvgDiscount": 0.9070860720939568,
+                "cmClientCount": 2,
+                "cmContributionPct": 0.024755952086013975
+              },
+              {
+                "channel": "Overall Avg.",
+                "lyAvgDiscount": 0.8427116109429694,
+                "lyClientCount": 45,
+                "lyContributionPct": 1,
+                "cmAvgDiscount": 0.7070688707537118,
+                "cmClientCount": 40,
+                "cmContributionPct": 1
+              }
+            ],
+            "discountCorrectionOverLY": 0.1356427401892576,
+            "overallOfferedDiscount": 0.7070688707537118,
+            "ranking": "A+"
+          },
+          "productivity": {
+            "region": "Delhi",
+            "targetPerHead": 0.854278527090909,
+            "targetPerHeadNational": 0.8542857142857143,
+            "actual": 0.6154213170000008,
+            "nationalActual": 0.8947735845182683,
+            "actualPct": 0.720398906777754,
+            "ranking": "C"
+          },
+          "salesQuality": {
+            "Off Screen": {
+              "region": "Delhi",
+              "ly": 0.1776521375,
+              "lm": 0.5498505420000003,
+              "cm": 0.557969061,
+              "cmPctContribution": 0.08242233196954571,
+              "ranking": "B"
+            },
+            "Innovations": {
+              "region": "Delhi",
+              "ly": null,
+              "lm": null,
+              "cm": null,
+              "cmPctContribution": null,
+              "ranking": "C"
+            },
+            "Format Sponsorships": {
+              "region": "Delhi",
+              "ly": null,
+              "lm": null,
+              "cm": null,
+              "cmPctContribution": null,
+              "ranking": "C"
+            },
+            "IP sales Deals": {
+              "region": "Delhi",
+              "ly": null,
+              "lm": null,
+              "cm": null,
+              "cmPctContribution": null,
+              "ranking": "C"
+            },
+            "Zeouk box deal": {
+              "region": "Delhi",
+              "ly": null,
+              "lm": 0.02,
+              "cm": null,
+              "cmPctContribution": null,
+              "ranking": "C"
+            },
+            "Brandscap deal": {
+              "region": "Delhi",
+              "ly": null,
+              "lm": null,
+              "cm": null,
+              "cmPctContribution": null,
+              "ranking": "C"
+            }
+          }
+        },
+        {
+          "regionName": "East",
+          "businessPlanning": {
+            "region": "East",
+            "aopTarget": 2.37,
+            "businessConfirmed": 2.5,
+            "actualRevenue": 2.646082931000005,
+            "actualPctOfTarget": 1.116490688185656,
+            "monthBeginningPct": 1.058433172400002,
+            "planningGrade": "A+",
+            "controlGrade": "A+"
+          },
+          "acBucket": {
+            "region": "East",
+            "keyGrowth": {
+              "division": "Top 15 A/Cs",
+              "targetIndex": 0.7,
+              "pctContributionOfAop": 0.33918663850158715,
+              "ranking": "C",
+              "topAccountsValue": 2.2311509370000038,
+              "achievement": null
+            },
+            "rotating": {
+              "division": "Rest",
+              "targetIndex": 0.3,
+              "pctContributionOfAop": 0.1471849799467188,
+              "ranking": "C",
+              "topAccountsValue": 0.4149319940000001,
+              "achievement": null
+            }
+          },
+          "priceControl": {
+            "region": "East",
+            "channels": [
+              {
+                "channel": "Other Agency",
+                "lyAvgDiscount": 0.7086762598449546,
+                "lyClientCount": 52,
+                "lyContributionPct": 0.10659229602583067,
+                "cmAvgDiscount": 0.8580088822309744,
+                "cmClientCount": 46,
+                "cmContributionPct": 0.28426707802227935
+              },
+              {
+                "channel": "Direct",
+                "lyAvgDiscount": 0.8217926561756504,
+                "lyClientCount": 35,
+                "lyContributionPct": 0.27329726514141933,
+                "cmAvgDiscount": 0.87201366176879,
+                "cmClientCount": 33,
+                "cmContributionPct": 0.33636145321554173
+              },
+              {
+                "channel": "ITV",
+                "lyAvgDiscount": 0.639928831914862,
+                "lyClientCount": 2,
+                "lyContributionPct": 0.09368724545789864,
+                "cmAvgDiscount": 0.6061198750129062,
+                "cmClientCount": 2,
+                "cmContributionPct": 0.06037316900707521
+              },
+              {
+                "channel": "Khushi",
+                "lyAvgDiscount": 0.8740326574835433,
+                "lyClientCount": 6,
+                "lyContributionPct": 0.031428157380100796,
+                "cmAvgDiscount": 0.5718946169192909,
+                "cmClientCount": 5,
+                "cmContributionPct": 0.0506585396208054
+              },
+              {
+                "channel": "Prachar",
+                "lyAvgDiscount": 0.9090313914854605,
+                "lyClientCount": 1,
+                "lyContributionPct": 0.49499503599475053,
+                "cmAvgDiscount": 0.9148822275209524,
+                "cmClientCount": 2,
+                "cmContributionPct": 0.2683397601342982
+              },
+              {
+                "channel": "Overall Avg.",
+                "lyAvgDiscount": 0.8664075151333029,
+                "lyClientCount": 96,
+                "lyContributionPct": 1,
+                "cmAvgDiscount": 0.8711523666137488,
+                "cmClientCount": 86,
+                "cmContributionPct": 1
+              }
+            ],
+            "discountCorrectionOverLY": -0.0054466378813726735,
+            "overallOfferedDiscount": 0.8711523666137488,
+            "ranking": "C"
+          },
+          "productivity": {
+            "region": "East",
+            "targetPerHead": 0.5925,
+            "targetPerHeadNational": 0.8542857142857143,
+            "actual": 0.6615207327500012,
+            "nationalActual": 0.8947735845182683,
+            "actualPct": 1.116490688185656,
+            "ranking": "A+"
+          },
+          "salesQuality": {
+            "Off Screen": {
+              "region": "East",
+              "ly": 0.127396674,
+              "lm": 0.16249581400000007,
+              "cm": 0.12376315200000003,
+              "cmPctContribution": 0.018282102562208816,
+              "ranking": "C"
+            },
+            "Innovations": {
+              "region": "East",
+              "ly": null,
+              "lm": null,
+              "cm": null,
+              "cmPctContribution": null,
+              "ranking": "C"
+            },
+            "Format Sponsorships": {
+              "region": "East",
+              "ly": null,
+              "lm": null,
+              "cm": null,
+              "cmPctContribution": null,
+              "ranking": "C"
+            },
+            "IP sales Deals": {
+              "region": "East",
+              "ly": null,
+              "lm": null,
+              "cm": null,
+              "cmPctContribution": null,
+              "ranking": "C"
+            },
+            "Zeouk box deal": {
+              "region": "East",
+              "ly": null,
+              "lm": 0.005,
+              "cm": null,
+              "cmPctContribution": null,
+              "ranking": "C"
+            },
+            "Brandscap deal": {
+              "region": "East",
+              "ly": null,
+              "lm": null,
+              "cm": null,
+              "cmPctContribution": null,
+              "ranking": "C"
+            }
+          }
+        }
+      ],
+      "financialControl": {
+        "territory": "Delhi + East",
+        "ytdIncomeBilled": 39.9,
+        "ytdOS": 30.13,
+        "collectionPct": 0.24486215538847123,
+        "ranking": "C"
+      },
+      "billingChallenges": {
+        "territory": "Delhi + East",
+        "monthlyIncomeBilled": 7.98,
+        "monthlyBillingChallenges": 1.93,
+        "billingChallengesPct": 0.24185463659147868,
+        "ranking": "C"
+      }
+    },
+    {
+      "manager": "Rajesh",
+      "territoryLabel": "North + West",
+      "month": "2026-08",
+      "subRegions": [
+        {
+          "regionName": "West + North",
+          "businessPlanning": {
+            "region": "West + North",
+            "aopTarget": 6.65,
+            "businessConfirmed": 6.1,
+            "actualRevenue": 6.6571637749999955,
+            "actualPctOfTarget": 1.0010772593984956,
+            "monthBeginningPct": 1.091338323770491,
+            "planningGrade": "A+",
+            "controlGrade": "A+"
+          },
+          "acBucket": {
+            "region": "West + North",
+            "keyGrowth": {
+              "division": "Top 15A/Cs",
+              "targetIndex": 0.7,
+              "pctContributionOfAop": 0.8751446358754015,
+              "ranking": "B",
+              "topAccountsValue": 4.073798279999994,
+              "achievement": null
+            },
+            "rotating": {
+              "division": "Rest",
+              "targetIndex": 0.3,
+              "pctContributionOfAop": 1.2949200476190466,
+              "ranking": "A+",
+              "topAccountsValue": 2.5833654949999976,
+              "achievement": null
+            }
+          },
+          "priceControl": {
+            "region": "West + North",
+            "channels": [
+              {
+                "channel": "Other Agency",
+                "lyAvgDiscount": 0.571774569589826,
+                "lyClientCount": 264,
+                "lyContributionPct": 0.46915785281517236,
+                "cmAvgDiscount": 0.650673348469536,
+                "cmClientCount": 232,
+                "cmContributionPct": 0.34310643424121007
+              },
+              {
+                "channel": "Direct",
+                "lyAvgDiscount": 0.6737552632549855,
+                "lyClientCount": 118,
+                "lyContributionPct": 0.2791550238137573,
+                "cmAvgDiscount": 0.9087106940484084,
+                "cmClientCount": 115,
+                "cmContributionPct": 0.4604471858588164
+              },
+              {
+                "channel": "ITV",
+                "lyAvgDiscount": 0.4312990512519087,
+                "lyClientCount": 2,
+                "lyContributionPct": 0.07010640479879734,
+                "cmAvgDiscount": 0,
+                "cmClientCount": null,
+                "cmContributionPct": null
+              },
+              {
+                "channel": "Khushi",
+                "lyAvgDiscount": 0.6247268927589051,
+                "lyClientCount": 52,
+                "lyContributionPct": 0.11542821527380244,
+                "cmAvgDiscount": 0.6510844656368268,
+                "cmClientCount": 46,
+                "cmContributionPct": 0.11894280203433807
+              },
+              {
+                "channel": "Prachar",
+                "lyAvgDiscount": 0.910065230731809,
+                "lyClientCount": 3,
+                "lyContributionPct": 0.0661525032984705,
+                "cmAvgDiscount": 0.9247161709818925,
+                "cmClientCount": 3,
+                "cmContributionPct": 0.07750357786563553
+              },
+              {
+                "channel": "Overall Avg.",
+                "lyAvgDiscount": 0.6839902336217639,
+                "lyClientCount": 437,
+                "lyContributionPct": 1,
+                "cmAvgDiscount": 0.8754706443071294,
+                "cmClientCount": 393,
+                "cmContributionPct": 1
+              }
+            ],
+            "discountCorrectionOverLY": -0.19148041068536548,
+            "overallOfferedDiscount": 0.8754706443071294,
+            "ranking": "C"
+          },
+          "productivity": {
+            "region": "West + North",
+            "targetPerHead": 0.31666666666666665,
+            "targetPerHeadNational": 0.8542857142857143,
+            "actual": 0.3170077988095236,
+            "nationalActual": 0.8947735845182683,
+            "actualPct": 1.0010772593984956,
+            "ranking": "A+"
+          },
+          "salesQuality": {
+            "Off Screen": {
+              "region": "West + North",
+              "ly": null,
+              "lm": 0.868671596,
+              "cm": 1.0074,
+              "cmPctContribution": 0.15132570476681728,
+              "ranking": "A"
+            },
+            "Innovations": {
+              "region": "West + North",
+              "ly": null,
+              "lm": 0.025,
+              "cm": 0.0675,
+              "cmPctContribution": 0.010139453118681918,
+              "ranking": "C"
+            },
+            "Format Sponsorships": {
+              "region": "West + North",
+              "ly": null,
+              "lm": null,
+              "cm": null,
+              "cmPctContribution": null,
+              "ranking": "C"
+            },
+            "IP sales Deals": {
+              "region": "West + North",
+              "ly": null,
+              "lm": null,
+              "cm": null,
+              "cmPctContribution": null,
+              "ranking": "C"
+            },
+            "Zeouk box deal": {
+              "region": "West + North",
+              "ly": null,
+              "lm": null,
+              "cm": null,
+              "cmPctContribution": null,
+              "ranking": "C"
+            },
+            "Brandscap deal": {
+              "region": "West + North",
+              "ly": null,
+              "lm": 0.0317,
+              "cm": 0.0127,
+              "cmPctContribution": 0.0019077193275149685,
+              "ranking": "C"
+            }
+          }
+        }
+      ],
+      "financialControl": {
+        "territory": "West + North",
+        "ytdIncomeBilled": 43.18,
+        "ytdOS": 18.94,
+        "collectionPct": 0.5613710050949514,
+        "ranking": "C"
+      },
+      "billingChallenges": {
+        "territory": "West + North",
+        "monthlyIncomeBilled": 8.63,
+        "monthlyBillingChallenges": 0.83,
+        "billingChallengesPct": 0.09617612977983776,
+        "ranking": "B"
+      }
+    },
+    {
+      "manager": "Shalini",
+      "territoryLabel": "KA + KL",
+      "month": "2026-08",
+      "subRegions": [
+        {
+          "regionName": "KA+KL",
+          "businessPlanning": {
+            "region": "KA+KL",
+            "aopTarget": 4.684556144813902,
+            "businessConfirmed": 2.3,
+            "actualRevenue": 4.690096308999999,
+            "actualPctOfTarget": 1.0011826444202683,
+            "monthBeginningPct": 2.0391723082608695,
+            "planningGrade": "A+",
+            "controlGrade": "A+"
+          },
+          "acBucket": {
+            "region": "KA+KL",
+            "keyGrowth": {
+              "division": "Top 15 A/Cs",
+              "targetIndex": 0.7,
+              "pctContributionOfAop": 1.1458399694798065,
+              "ranking": "A+",
+              "topAccountsValue": 3.7574261690000004,
+              "achievement": null
+            },
+            "rotating": {
+              "division": "Rest",
+              "targetIndex": 0.3,
+              "pctContributionOfAop": 0.6636488859480132,
+              "ranking": "C",
+              "topAccountsValue": 0.9326701399999996,
+              "achievement": null
+            }
+          },
+          "priceControl": {
+            "region": "KA+KL",
+            "channels": [
+              {
+                "channel": "Other Agency",
+                "lyAvgDiscount": 0.582373928667365,
+                "lyClientCount": 4,
+                "lyContributionPct": 0.02443130514369137,
+                "cmAvgDiscount": 0.6880945847602108,
+                "cmClientCount": 10,
+                "cmContributionPct": 0.2339316465409496
+              },
+              {
+                "channel": "Direct",
+                "lyAvgDiscount": 0.8416432955285642,
+                "lyClientCount": 18,
+                "lyContributionPct": 0.22690835803651604,
+                "cmAvgDiscount": 0.8594788010588897,
+                "cmClientCount": 18,
+                "cmContributionPct": 0.37385775397304316
+              },
+              {
+                "channel": "ITV",
+                "lyAvgDiscount": null,
+                "lyClientCount": null,
+                "lyContributionPct": null,
+                "cmAvgDiscount": 0.5477910392353931,
+                "cmClientCount": 3,
+                "cmContributionPct": 0.06214965403602759
+              },
+              {
+                "channel": "Khushi",
+                "lyAvgDiscount": 0.7264040525236803,
+                "lyClientCount": 38,
+                "lyContributionPct": 0.7486603368197925,
+                "cmAvgDiscount": 0.7337907034089479,
+                "cmClientCount": 31,
+                "cmContributionPct": 0.3300609454499796
+              },
+              {
+                "channel": "Prachar",
+                "lyAvgDiscount": null,
+                "lyClientCount": null,
+                "lyContributionPct": null,
+                "cmAvgDiscount": null,
+                "cmClientCount": null,
+                "cmContributionPct": null
+              },
+              {
+                "channel": "Overall Avg.",
+                "lyAvgDiscount": 0.7661006400954913,
+                "lyClientCount": 60,
+                "lyContributionPct": 1,
+                "cmAvgDiscount": 0.8086983829220781,
+                "cmClientCount": 62,
+                "cmContributionPct": 1
+              }
+            ],
+            "discountCorrectionOverLY": -0.04259774282658679,
+            "overallOfferedDiscount": 0.8086983829220781,
+            "ranking": "C"
+          },
+          "productivity": {
+            "region": "KA+KL",
+            "targetPerHead": 0.46845561448139017,
+            "targetPerHeadNational": 0.8542857142857143,
+            "actual": 0.4690096308999999,
+            "nationalActual": 0.8947735845182683,
+            "actualPct": 1.0011826444202683,
+            "ranking": "A+"
+          },
+          "salesQuality": {
+            "Off Screen": {
+              "region": "KA+KL",
+              "ly": null,
+              "lm": 0.07,
+              "cm": 0.12,
+              "cmPctContribution": 0.04,
+              "ranking": "C"
+            },
+            "Innovations": {
+              "region": "KA+KL",
+              "ly": null,
+              "lm": 0.01,
+              "cm": 0.0,
+              "cmPctContribution": 0,
+              "ranking": "C"
+            },
+            "Format Sponsorships": {
+              "region": "KA+KL",
+              "ly": null,
+              "lm": null,
+              "cm": 0.0,
+              "cmPctContribution": 0,
+              "ranking": "C"
+            },
+            "IP sales Deals": {
+              "region": "KA+KL",
+              "ly": null,
+              "lm": null,
+              "cm": 0.0,
+              "cmPctContribution": 0,
+              "ranking": "C"
+            },
+            "Zeouk box deal": {
+              "region": "KA+KL",
+              "ly": null,
+              "lm": null,
+              "cm": 0.0,
+              "cmPctContribution": 0,
+              "ranking": "C"
+            },
+            "Brandscap deal": {
+              "region": "KA+KL",
+              "ly": null,
+              "lm": 0.01,
+              "cm": 0.01,
+              "cmPctContribution": 0.0008,
+              "ranking": "C"
+            }
+          }
+        }
+      ],
+      "financialControl": {
+        "territory": "KA+KL",
+        "ytdIncomeBilled": 16.73,
+        "ytdOS": 10.7,
+        "collectionPct": 0.3604303646144651,
+        "ranking": "C"
+      },
+      "billingChallenges": {
+        "territory": "KA+KL",
+        "monthlyIncomeBilled": 3.34,
+        "monthlyBillingChallenges": 0.77,
+        "billingChallengesPct": 0.23053892215568864,
+        "ranking": "C"
+      }
+    },
+    {
+      "manager": "Sharda",
+      "territoryLabel": "West - Mumbai",
+      "month": "2026-08",
+      "subRegions": [
+        {
+          "regionName": "West (Mum)",
+          "businessPlanning": {
+            "region": "West (Mum)",
+            "aopTarget": 10.52,
+            "businessConfirmed": 7.35,
+            "actualRevenue": 12.884841517000002,
+            "actualPctOfTarget": 1.2247948210076047,
+            "monthBeginningPct": 1.7530396621768711,
+            "planningGrade": "A+",
+            "controlGrade": "A+"
+          },
+          "acBucket": {
+            "region": "West (Mum)",
+            "keyGrowth": {
+              "division": "Top 15 A/Cs",
+              "targetIndex": 0.7,
+              "pctContributionOfAop": 1.3981886413633895,
+              "ranking": "A+",
+              "topAccountsValue": 10.296261155,
+              "achievement": null
+            },
+            "rotating": {
+              "division": "Rest",
+              "targetIndex": 0.3,
+              "pctContributionOfAop": 0.820209240177439,
+              "ranking": "B",
+              "topAccountsValue": 2.5885803619999974,
+              "achievement": null
+            }
+          },
+          "priceControl": {
+            "region": "West (Mum)",
+            "channels": [
+              {
+                "channel": "Other Agency",
+                "lyAvgDiscount": 0.7920237886535206,
+                "lyClientCount": 18,
+                "lyContributionPct": 0.4947900676605133,
+                "cmAvgDiscount": 0.9631553231441208,
+                "cmClientCount": 22,
+                "cmContributionPct": 0.07302789295145949
+              },
+              {
+                "channel": "Direct",
+                "lyAvgDiscount": 0.5340872106453354,
+                "lyClientCount": 8,
+                "lyContributionPct": 0.13371077655909533,
+                "cmAvgDiscount": 0.6741426280410899,
+                "cmClientCount": 19,
+                "cmContributionPct": 0.5950762320113683
+              },
+              {
+                "channel": "ITV",
+                "lyAvgDiscount": 0.8675278375034099,
+                "lyClientCount": 8,
+                "lyContributionPct": 0.1717126238634143,
+                "cmAvgDiscount": 0.7852698164423746,
+                "cmClientCount": 7,
+                "cmContributionPct": 0.11695763878909347
+              },
+              {
+                "channel": "Khushi",
+                "lyAvgDiscount": 0.7528568267236556,
+                "lyClientCount": 14,
+                "lyContributionPct": 0.13199144150596392,
+                "cmAvgDiscount": 0.7835703763810865,
+                "cmClientCount": 17,
+                "cmContributionPct": 0.15536087505297327
+              },
+              {
+                "channel": "Prachar",
+                "lyAvgDiscount": 0.8787133626708241,
+                "lyClientCount": 2,
+                "lyContributionPct": 0.06779509041101323,
+                "cmAvgDiscount": 0.9193653412587149,
+                "cmClientCount": 4,
+                "cmContributionPct": 0.059577361195105566
+              },
+              {
+                "channel": "Overall Avg.",
+                "lyAvgDiscount": 0.8022629781003028,
+                "lyClientCount": 50,
+                "lyContributionPct": 1,
+                "cmAvgDiscount": 0.8785991307373222,
+                "cmClientCount": 67,
+                "cmContributionPct": 1
+              }
+            ],
+            "discountCorrectionOverLY": -0.07633615263701943,
+            "overallOfferedDiscount": 0.8785991307373222,
+            "ranking": "C"
+          },
+          "productivity": {
+            "region": "West (Mum)",
+            "targetPerHead": 0.9563636363636364,
+            "targetPerHeadNational": 0.8542857142857143,
+            "actual": 1.171349228818182,
+            "nationalActual": 0.8947735845182683,
+            "actualPct": 1.2247948210076047,
+            "ranking": "A+"
+          },
+          "salesQuality": {
+            "Off Screen": {
+              "region": "West (Mum)",
+              "ly": null,
+              "lm": 2.0051252600000002,
+              "cm": 1.9431752230000037,
+              "cmPctContribution": 0.17257328801065752,
+              "ranking": "A"
+            },
+            "Innovations": {
+              "region": "West (Mum)",
+              "ly": null,
+              "lm": 1.5091999999999999,
+              "cm": 1.2424752230000038,
+              "cmPctContribution": 0.11034415834813534,
+              "ranking": "A"
+            },
+            "Format Sponsorships": {
+              "region": "West (Mum)",
+              "ly": null,
+              "lm": 0.39689883600000003,
+              "cm": 0.4628,
+              "cmPctContribution": 0.041101243339253996,
+              "ranking": "C"
+            },
+            "IP sales Deals": {
+              "region": "West (Mum)",
+              "ly": null,
+              "lm": null,
+              "cm": null,
+              "cmPctContribution": null,
+              "ranking": "C"
+            },
+            "Zeouk box deal": {
+              "region": "West (Mum)",
+              "ly": null,
+              "lm": null,
+              "cm": null,
+              "cmPctContribution": null,
+              "ranking": "C"
+            },
+            "Brandscap deal": {
+              "region": "West (Mum)",
+              "ly": null,
+              "lm": 0.1699,
+              "cm": 0.0375,
+              "cmPctContribution": 0.0033303730017761987,
+              "ranking": "C"
+            }
+          }
+        }
+      ],
+      "financialControl": {
+        "territory": "West (Mum)",
+        "ytdIncomeBilled": 56.84,
+        "ytdOS": 33.18,
+        "collectionPct": 0.41625615763546797,
+        "ranking": "C"
+      },
+      "billingChallenges": {
+        "territory": "West (Mum)",
+        "monthlyIncomeBilled": 11.36,
+        "monthlyBillingChallenges": 2.41,
+        "billingChallengesPct": 0.21214788732394368,
+        "ranking": "C"
+      }
+    }
+  ]
+}

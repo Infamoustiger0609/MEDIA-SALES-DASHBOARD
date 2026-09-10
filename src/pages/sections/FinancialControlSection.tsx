@@ -1,11 +1,18 @@
 import Card from "../../components/Card";
 import GradeBadge from "../../components/GradeBadge";
-import StatTile from "../../components/StatTile";
 import DeltaBadge from "../../components/DeltaBadge";
 import MonthComparisonTable from "../../components/MonthComparisonTable";
 import { useComparison } from "../../lib/useComparison";
 import { fmtCr, fmtPct } from "../../lib/format";
 import type { ComparisonMode, Territory } from "../../types";
+
+/** ≥85% green, 75–85% gold, <75% terracotta. */
+function collectionColor(pct: number | null | undefined): string {
+  if (pct == null) return "var(--color-grade-n)";
+  if (pct >= 0.85) return "var(--color-grade-a)";
+  if (pct >= 0.75) return "var(--color-grade-b)";
+  return "var(--color-grade-c)";
+}
 
 interface FinancialControlSectionProps {
   territories: Territory[];
@@ -36,27 +43,54 @@ export default function FinancialControlSection({
     const fc = territory.financialControl;
 
     return (
-      <Card title="Financial Control" subtitle="Year-to-date income, outstanding & collection">
+      <Card title="6 · Financial Control" subtitle="Year-to-date income, outstanding & collection">
         {!fc ? (
-          <p className="text-sm text-slate-400">No financial control data for this period.</p>
+          <p className="text-sm text-muted">No financial control data for this period.</p>
         ) : (
           <div>
-            <div className="mb-3 flex items-center justify-between">
-              <span className="text-sm text-slate-500">{fc.territory ?? territory.territoryLabel}</span>
+            <div className="mb-4 flex items-center justify-between">
+              <span className="text-sm text-muted">{fc.territory ?? territory.territoryLabel}</span>
               <GradeBadge grade={fc.ranking} />
             </div>
-            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
-              <StatTile
-                label="YTD Income Billed"
-                value={fmtCr(ytdIncomeComparison.current)}
-                delta={<DeltaBadge result={ytdIncomeComparison} mode={comparisonMode} />}
-              />
-              <StatTile label="YTD Outstanding" value={fmtCr(fc.ytdOS)} />
-              <StatTile
-                label="Collection %"
-                value={fmtPct(collectionComparison.current)}
-                delta={<DeltaBadge result={collectionComparison} mode={comparisonMode} />}
-              />
+            <div className="flex flex-col gap-4">
+              <div>
+                <div className="flex items-baseline gap-2.5">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-muted-2">
+                    YTD Income Billed
+                  </div>
+                  <DeltaBadge result={ytdIncomeComparison} mode={comparisonMode} />
+                </div>
+                <div className="mt-1 font-serif text-2xl font-semibold text-charcoal">
+                  {fmtCr(ytdIncomeComparison.current)}
+                </div>
+              </div>
+              <div>
+                <div className="text-xs font-semibold uppercase tracking-wide text-muted-2">YTD Outstanding</div>
+                <div className="mt-1 font-serif text-2xl font-semibold text-charcoal">{fmtCr(fc.ytdOS)}</div>
+              </div>
+              <div>
+                <div className="flex items-baseline justify-between">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-muted-2">Collection %</div>
+                  <span className="flex items-center gap-2">
+                    <span
+                      className="font-mono text-base font-bold"
+                      style={{ color: collectionColor(collectionComparison.current) }}
+                    >
+                      {fmtPct(collectionComparison.current, 0)}
+                    </span>
+                    <DeltaBadge result={collectionComparison} mode={comparisonMode} />
+                  </span>
+                </div>
+                <div className="mt-2 h-2 overflow-hidden rounded-full bg-app-bg">
+                  <div
+                    className="h-full rounded-full"
+                    style={{
+                      width: `${Math.max(0, Math.min(100, (collectionComparison.current ?? 0) * 100))}%`,
+                      backgroundColor: collectionColor(collectionComparison.current),
+                    }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         )}
@@ -68,7 +102,14 @@ export default function FinancialControlSection({
   const rows = [
     { label: "YTD Income Billed", values: territories.map((t) => fmtCr(t.financialControl?.ytdIncomeBilled)) },
     { label: "YTD Outstanding", values: territories.map((t) => fmtCr(t.financialControl?.ytdOS)) },
-    { label: "Collection %", values: territories.map((t) => fmtPct(t.financialControl?.collectionPct)) },
+    {
+      label: "Collection %",
+      values: territories.map((t, i) => (
+        <span key={i} className="font-semibold" style={{ color: collectionColor(t.financialControl?.collectionPct) }}>
+          {fmtPct(t.financialControl?.collectionPct, 0)}
+        </span>
+      )),
+    },
     {
       label: "Ranking",
       values: territories.map((t, i) => <GradeBadge key={i} grade={t.financialControl?.ranking} />),
@@ -76,7 +117,7 @@ export default function FinancialControlSection({
   ];
 
   return (
-    <Card title="Financial Control" subtitle="Year-to-date income, outstanding & collection, by month">
+    <Card title="6 · Financial Control" subtitle="Year-to-date income, outstanding & collection, by month">
       <MonthComparisonTable months={months} rows={rows} />
     </Card>
   );

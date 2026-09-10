@@ -44,8 +44,8 @@ export default function Overview() {
       <FilterBar />
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-6">
-          <h1 className="text-xl font-bold text-charcoal">CRD Leads Dashboard</h1>
-          <p className="mt-1 text-sm text-slate-500">
+          <h1 className="font-serif text-2xl font-semibold text-charcoal">CRD Leads Dashboard</h1>
+          <p className="mt-1 text-sm text-muted">
             Territory performance {selectedMonths.length > 1 ? "as of" : "for"} {monthLabel}
           </p>
         </div>
@@ -60,10 +60,13 @@ export default function Overview() {
 
           <SalesQualityContributionSummary territories={selectedTerritories} />
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {territories.map((t) => (
-              <TerritoryCard key={t.manager} territory={t} />
-            ))}
+          <div>
+            <h2 className="mb-3.5 font-serif text-[15px] font-semibold text-charcoal">Territories</h2>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              {territories.map((t) => (
+                <TerritoryCard key={t.manager} territory={t} />
+              ))}
+            </div>
           </div>
         </div>
       </main>
