@@ -1,14 +1,23 @@
 import { Link } from "react-router-dom";
-import type { Territory } from "../types";
+import type { Manager, Territory } from "../types";
 import GradeBadge from "./GradeBadge";
 import DeltaBadge from "./DeltaBadge";
-import { aopAchievementPct, territoryPlanningGrade, totalActualRevenue } from "../lib/aggregate";
+import {
+  combinedAchievementPct,
+  combinedActualRevenue,
+  territoryPlanningGrade,
+  worstRanking,
+} from "../lib/aggregate";
 import { fmtCr, fmtPct } from "../lib/format";
-import { useComparison } from "../lib/useComparison";
+import { useManagerComparison } from "../lib/useComparison";
 import { useFilterStore } from "../store/filterStore";
 
 interface TerritoryCardProps {
-  territory: Territory;
+  manager: Manager;
+  territoryLabel: string;
+  /** This manager's territory data across every currently selected month
+   * (may be empty if none of the selected months have data for them). */
+  territories: Territory[];
 }
 
 const GRADE_BAR_COLOR: Record<string, string> = {
@@ -18,26 +27,31 @@ const GRADE_BAR_COLOR: Record<string, string> = {
   C: "var(--color-grade-c)",
 };
 
-export default function TerritoryCard({ territory }: TerritoryCardProps) {
-  const comparisonMode = useFilterStore((s) => s.comparisonMode);
-  const achievementComparison = useComparison(territory.manager, aopAchievementPct, comparisonMode);
-  const revenueComparison = useComparison(territory.manager, totalActualRevenue, comparisonMode);
+function subRegionNamesOf(territories: Territory[]): string[] {
+  return Array.from(new Set(territories.flatMap((t) => t.subRegions.map((sr) => sr.regionName))));
+}
 
-  const grade = territoryPlanningGrade(territory);
+export default function TerritoryCard({ manager, territoryLabel, territories }: TerritoryCardProps) {
+  const comparisonMode = useFilterStore((s) => s.comparisonMode);
+  const achievementComparison = useManagerComparison(manager, combinedAchievementPct, comparisonMode);
+  const revenueComparison = useManagerComparison(manager, combinedActualRevenue, comparisonMode);
+
+  const grade = territoryPlanningGrade(territories);
   const barPct = achievementComparison.current !== null
     ? Math.max(0, Math.min(100, achievementComparison.current * 100))
     : 0;
   const barColor = grade ? (GRADE_BAR_COLOR[grade] ?? "var(--color-grade-n)") : "var(--color-grade-n)";
+  const regionNames = subRegionNamesOf(territories);
 
   return (
     <Link
-      to={`/territory/${territory.manager}`}
+      to={`/territory/${manager}`}
       className="group flex flex-col gap-4 rounded-2xl border border-hairline bg-cream p-6 shadow-[0_2px_10px_rgba(36,31,24,0.05)] transition-shadow duration-150 hover:border-gold/40 hover:shadow-[0_6px_20px_rgba(36,31,24,0.12)]"
     >
       <div className="flex items-start justify-between">
         <div>
-          <h3 className="text-[15px] font-bold text-charcoal">{territory.manager}</h3>
-          <p className="mt-0.5 text-xs font-medium text-muted">{territory.territoryLabel}</p>
+          <h3 className="text-[15px] font-bold text-charcoal">{manager}</h3>
+          <p className="mt-0.5 text-xs font-medium text-muted">{territoryLabel}</p>
         </div>
         <GradeBadge grade={grade} />
       </div>
@@ -61,15 +75,23 @@ export default function TerritoryCard({ territory }: TerritoryCardProps) {
       </div>
 
       <div className="flex flex-wrap gap-1.5">
-        {territory.subRegions.map((sr) => (
-          <div key={sr.regionName} className="flex items-center gap-1 rounded-lg bg-gold-soft/25 px-2 py-1">
-            {territory.subRegions.length > 1 && (
-              <span className="text-[11px] font-medium text-muted-2">{sr.regionName}</span>
-            )}
-            <GradeBadge grade={sr.businessPlanning?.planningGrade} label="P" />
-            <GradeBadge grade={sr.businessPlanning?.controlGrade} label="C" />
-          </div>
-        ))}
+        {regionNames.map((regionName) => {
+          const planningGrade = worstRanking(
+            territories.map((t) => t.subRegions.find((sr) => sr.regionName === regionName)?.businessPlanning?.planningGrade),
+          );
+          const controlGrade = worstRanking(
+            territories.map((t) => t.subRegions.find((sr) => sr.regionName === regionName)?.businessPlanning?.controlGrade),
+          );
+          return (
+            <div key={regionName} className="flex items-center gap-1 rounded-lg bg-gold-soft/25 px-2 py-1">
+              {regionNames.length > 1 && (
+                <span className="text-[11px] font-medium text-muted-2">{regionName}</span>
+              )}
+              <GradeBadge grade={planningGrade} label="P" />
+              <GradeBadge grade={controlGrade} label="C" />
+            </div>
+          );
+        })}
       </div>
 
       <div className="flex items-center justify-between border-t border-hairline pt-3">

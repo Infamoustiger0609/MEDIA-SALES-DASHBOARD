@@ -28,10 +28,12 @@ export function worstRanking(rankings: Array<string | null | undefined>): string
   return valid.reduce((worst, r) => (GRADE_ORDER[r] < GRADE_ORDER[worst] ? r : worst));
 }
 
-/** Worst planning grade across a territory's sub-regions -- used for a single
- * territory-level grade badge (e.g. the Overview territory card). */
-export function territoryPlanningGrade(t: Territory): string | null {
-  return worstRanking(t.subRegions.map((sr) => sr.businessPlanning?.planningGrade));
+/** Worst planning grade across every sub-region of every given territory --
+ * used for a single territory-level grade badge (e.g. the Overview
+ * territory card) that stays correct whether it's fed one month's
+ * territory or several selected months' worth for the same manager. */
+export function territoryPlanningGrade(territories: Territory[]): string | null {
+  return worstRanking(territories.flatMap((t) => t.subRegions.map((sr) => sr.businessPlanning?.planningGrade)));
 }
 
 function sumField(t: Territory, selector: (bp: BusinessPlanning) => number | null): number | null {
